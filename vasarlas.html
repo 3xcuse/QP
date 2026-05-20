@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+<html lang="hu" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vásárlás és rendszerbevezetés — Qsoft Kft.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="fonts.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { 950:'#061828',900:'#0D2B4E',800:'#0F3460',700:'#1A4A7A',600:'#1E5C94',500:'#2470B0',200:'#90B4D0',100:'#C8DCF0' },
+                        accent: { DEFAULT:'#0EA5E9', dark:'#0284C7' },
+                    },
+                    fontFamily: { sans: ['Planer','system-ui','sans-serif'] },
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-hero { background: linear-gradient(135deg, #061828 0%, #0D2B4E 60%, #1A4A7A 100%); }
+        .gradient-cta  { background: linear-gradient(135deg, #0D2B4E 0%, #1A4A7A 100%); }
+        .card-hover { transition: transform .2s ease, box-shadow .2s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(13,43,78,.15); }
+        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .nav-item:hover .nav-dropdown { display: block; }
+        .nav-dropdown { display: none; }
+        .ms { font-family: 'Material Symbols Outlined'; font-size: 1.25rem; line-height: 1; }
+    </style>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased">
+
+<nav class="fixed top-0 left-0 right-0 z-50 bg-navy-900/95 backdrop-blur-sm border-b border-navy-700/50">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <a href="index.html"><img src="assets/images/qsoft-logo.png" alt="Qsoft Kft." class="h-9 w-auto"></a>
+            <div class="hidden md:flex items-center gap-1">
+                <div class="nav-item relative">
+                    <a href="sup.html" class="text-slate-300 hover:text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-1">
+                        SUP Rendszer <span class="ms text-slate-500" style="font-size:.9rem">expand_more</span>
+                    </a>
+                    <div class="nav-dropdown absolute top-full left-0 mt-1 w-60 bg-white rounded-xl shadow-2xl border border-slate-100 overflow-hidden z-50">
+                        <div class="p-2">
+                            <a href="modulok/szamvitel.html"  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-700 text-sm"><span class="ms text-navy-700">calculate</span>Számvitel</a>
+                            <a href="modulok/penzugy.html"    class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-700 text-sm"><span class="ms text-navy-700">payments</span>Pénzügy</a>
+                            <a href="modulok/szamlazas.html"  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-700 text-sm"><span class="ms text-navy-700">receipt_long</span>Számlázás</a>
+                            <a href="modulok/szerzodes.html"  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-700 text-sm"><span class="ms text-navy-700">description</span>Szerződésnyilvántartás</a>
+                            <a href="modulok/hazi-penztar.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-700 text-sm"><span class="ms text-navy-700">savings</span>Házipénztár</a>
+                            <a href="modulok/raktar.html"     class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-700 text-sm"><span class="ms text-navy-700">warehouse</span>Raktár (SUPRA)</a>
+                            <a href="modulok/targyi-eszkoz.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-700 text-sm"><span class="ms text-navy-700">business_center</span>Tárgyi eszköz</a>
+                            <a href="modulok/merleg.html"     class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-700 text-sm"><span class="ms text-navy-700">bar_chart</span>Mérleg és elemzés</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="tip.html"           class="text-slate-300 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">TIP Iratkezelő</a>
+                <a href="oil.html"           class="text-slate-300 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">Online Lekérdezés</a>
+                <a href="miert-valasszon.html" class="text-slate-300 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">Miért mi?</a>
+                <a href="vasarlas.html"      class="text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-navy-700/50">Árak</a>
+            </div>
+            <a href="kapcsolat.html" class="hidden md:inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors">
+                <span class="ms" style="font-size:1rem">mail</span> Ajánlatot kérek
+            </a>
+        </div>
+    </div>
+</nav>
+
+<section class="gradient-hero pt-16">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-20">
+        <div class="max-w-3xl fade-in">
+            <div class="inline-flex items-center gap-2 bg-navy-700/50 text-accent text-sm font-medium px-4 py-2 rounded-full mb-8 border border-navy-600/50">
+                <span class="ms" style="font-size:1rem">shopping_cart</span> Vásárlás és rendszerbevezetés
+            </div>
+            <h1 class="text-5xl font-bold text-white leading-tight mb-6">Rugalmas vásárlási<br><span class="text-accent">lehetőségek</span></h1>
+            <p class="text-slate-300 text-xl leading-relaxed">
+                Amennyiben felkeltettük érdeklődését rendszerünkkel kapcsolatban forduljon hozzánk bizalommal irodai telefonszámaink egyikén (365-4446, 209-6651), vagy akár e-mailben (mail@qsoft.hu).
+            </p>
+        </div>
+    </div>
+    <div class="border-t border-navy-700/50 bg-navy-950/40">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center gap-2 text-sm text-slate-400">
+            <a href="index.html" class="hover:text-white transition-colors">Főoldal</a>
+            <span class="ms" style="font-size:.9rem">chevron_right</span>
+            <span class="text-white">Vásárlás és rendszerbevezetés</span>
+        </div>
+    </div>
+</section>
+
+<!-- Intro -->
+<section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 lg:px-8 fade-in">
+        <p class="text-slate-600 text-lg leading-relaxed text-center">
+            Díjmentes konzultációval, programbemutatóval állunk rendelkezésére a QSoft Kft. irodájában, illetve az Önök telephelyén az ország egész területén. Konzultációk során felmért konkrét igényei alapján megfelelően testre szabott, részletes ajánlatot adunk vállalatirányítási, ügyviteli rendszerének szállítására, igény esetén számítógépei üzemeltetésére, korszerűsítésére, akár hálózatüzemeltetésre.
+        </p>
+    </div>
+</section>
+
+<!-- Konstrukciók -->
+<section class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+        <div class="text-center mb-14 fade-in">
+            <div class="text-accent text-sm font-semibold uppercase tracking-wider mb-3">Konstrukciók</div>
+            <h2 class="text-4xl font-bold text-navy-900">Válassza a megfelelő konstrukciót</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+            <!-- Bérleti -->
+            <div class="fade-in bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+                <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">Bérleti konstrukció</div>
+                <h3 class="text-2xl font-bold text-navy-900 mb-2">Havi bérleti díj</h3>
+                <p class="text-slate-500 text-sm mb-6">Havi bérleti díj alapján, folyamatos rendszerkarbantartással.</p>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-center gap-2 text-sm text-slate-600"><span class="ms text-green-500" style="font-size:1rem">check_circle</span>Folyamatos karbantartás</li>
+                    <li class="flex items-center gap-2 text-sm text-slate-600"><span class="ms text-green-500" style="font-size:1rem">check_circle</span>Jogszabályi frissítések</li>
+                    <li class="flex items-center gap-2 text-sm text-slate-600"><span class="ms text-green-500" style="font-size:1rem">check_circle</span>Helpdesk szolgáltatás</li>
+                    <li class="flex items-center gap-2 text-sm text-slate-600"><span class="ms text-green-500" style="font-size:1rem">check_circle</span>Kiszámítható havi költség</li>
+                </ul>
+                <a href="kapcsolat.html" class="block text-center bg-slate-100 hover:bg-slate-200 text-navy-900 font-semibold py-3 rounded-xl text-sm transition-colors">Ajánlatot kérek</a>
+            </div>
+            <!-- Vásárlási (kiemelt) -->
+            <div class="fade-in bg-navy-900 rounded-2xl p-8 border border-navy-700 shadow-xl">
+                <div class="text-xs font-semibold text-accent uppercase tracking-wider mb-4">Vásárlási konstrukció</div>
+                <h3 class="text-2xl font-bold text-white mb-2">Egyszeri vásárlás</h3>
+                <p class="text-slate-400 text-sm mb-6">1 éves ingyenes követési időszak, majd éves rendszerkarbantartási díj.</p>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-center gap-2 text-sm text-slate-300"><span class="ms text-accent" style="font-size:1rem">check_circle</span>1 év ingyenes követés</li>
+                    <li class="flex items-center gap-2 text-sm text-slate-300"><span class="ms text-accent" style="font-size:1rem">check_circle</span>Saját licensz</li>
+                    <li class="flex items-center gap-2 text-sm text-slate-300"><span class="ms text-accent" style="font-size:1rem">check_circle</span>Jogszabályi frissítések</li>
+                    <li class="flex items-center gap-2 text-sm text-slate-300"><span class="ms text-accent" style="font-size:1rem">check_circle</span>Helpdesk szolgáltatás</li>
+                </ul>
+                <a href="kapcsolat.html" class="block text-center bg-accent hover:bg-accent-dark text-white font-semibold py-3 rounded-xl text-sm transition-colors">Ajánlatot kérek</a>
+            </div>
+            <!-- Különleges ajánlat -->
+            <div class="fade-in bg-white rounded-2xl p-8 border-2 border-accent shadow-sm relative overflow-hidden">
+                <div class="absolute top-4 right-4 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">2026.12.31-ig</div>
+                <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-5">
+                    <span class="ms text-accent" style="font-size:1.4rem">local_offer</span>
+                </div>
+                <h3 class="text-xl font-bold text-navy-900 mb-2">Különleges ajánlat</h3>
+                <p class="text-slate-500 text-sm mb-4">Új ügyfeleinknek szóló ajánlat: Amennyiben az aktuális árjegyzékünk alapján kalkulált bérleti díj nem lépi túl a 30 000 Ft+ÁFA/hó összeget, 20% kedvezményt biztosítunk a havi bérleti díjból!</p>
+                <div class="bg-accent/5 rounded-xl p-4 mb-6 border border-accent/20">
+                    <div class="text-3xl font-bold text-accent mb-1">20%</div>
+                    <div class="text-sm text-slate-600">kedvezmény a havi bérleti díjból</div>
+                    <div class="text-xs text-slate-500 mt-2">+ Telepítési költség elengedve</div>
+                </div>
+                <a href="kapcsolat.html" class="block text-center bg-accent hover:bg-accent-dark text-white font-semibold py-3 rounded-xl text-sm transition-colors">Ajánlat igénylése</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Folyamat -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+        <div class="text-center mb-14 fade-in">
+            <h2 class="text-3xl font-bold text-navy-900">Hogyan kezdjük el?</h2>
+        </div>
+        <div class="grid md:grid-cols-4 gap-6">
+            <div class="fade-in text-center">
+                <div class="w-14 h-14 bg-accent rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <span class="text-white font-bold text-xl">1</span>
+                </div>
+                <h4 class="font-semibold text-navy-900 mb-2">Kapcsolatfelvétel</h4>
+                <p class="text-slate-500 text-sm">Forduljon hozzánk telefonon (+36 1 365-4446) vagy e-mailben.</p>
+            </div>
+            <div class="fade-in text-center">
+                <div class="w-14 h-14 bg-navy-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <span class="text-white font-bold text-xl">2</span>
+                </div>
+                <h4 class="font-semibold text-navy-900 mb-2">Díjmentes konzultáció</h4>
+                <p class="text-slate-500 text-sm">Felmérjük igényeit személyesen irodánkban vagy telephelyükön.</p>
+            </div>
+            <div class="fade-in text-center">
+                <div class="w-14 h-14 bg-navy-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <span class="text-white font-bold text-xl">3</span>
+                </div>
+                <h4 class="font-semibold text-navy-900 mb-2">Testre szabott ajánlat</h4>
+                <p class="text-slate-500 text-sm">Részletes ajánlatot adunk a konkrét igények alapján.</p>
+            </div>
+            <div class="fade-in text-center">
+                <div class="w-14 h-14 bg-navy-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <span class="text-white font-bold text-xl">4</span>
+                </div>
+                <h4 class="font-semibold text-navy-900 mb-2">Bevezetés és támogatás</h4>
+                <p class="text-slate-500 text-sm">Rendszerbevezetés, oktatás és folyamatos helpdesk támogatás.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="gradient-cta py-20">
+    <div class="max-w-4xl mx-auto px-4 lg:px-8 text-center fade-in">
+        <h2 class="text-4xl font-bold text-white mb-4">Kérjen díjmentes konzultációt</h2>
+        <p class="text-slate-300 text-xl mb-10">Személyesen, telefonon vagy e-mailben — az egész országban.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="tel:+3613654446" class="inline-flex items-center gap-2 bg-white text-navy-900 px-6 py-3 rounded-xl font-semibold text-base hover:bg-slate-100 transition-colors"><span class="ms">call</span> +36 (1) 365-4446</a>
+            <a href="kapcsolat.html"  class="inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-6 py-3 rounded-xl font-semibold text-base transition-colors"><span class="ms">mail</span> Üzenetet küldök</a>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-navy-950 text-slate-400 py-16">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+        <div class="grid md:grid-cols-4 gap-10 mb-12">
+            <div>
+                <div class="mb-4"><img src="assets/images/qsoft-logo.png" alt="Qsoft Kft." class="h-10 w-auto"></div>
+                <p class="text-sm leading-relaxed mb-4">100% magyar tulajdonú szoftverfejlesztő cég, 1991 óta.</p>
+            </div>
+            <div>
+                <div class="text-white font-semibold text-sm mb-4">SUP Modulok</div>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="modulok/szamvitel.html"     class="hover:text-white transition-colors">Számvitel</a></li>
+                    <li><a href="modulok/penzugy.html"       class="hover:text-white transition-colors">Pénzügy</a></li>
+                    <li><a href="modulok/szamlazas.html"     class="hover:text-white transition-colors">Számlázás</a></li>
+                    <li><a href="modulok/raktar.html"        class="hover:text-white transition-colors">Raktár (SUPRA)</a></li>
+                    <li><a href="modulok/merleg.html"        class="hover:text-white transition-colors">Mérleg és elemzés</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="text-white font-semibold text-sm mb-4">Megoldások</div>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="tip.html"               class="hover:text-white transition-colors">TIP Iratkezelő</a></li>
+                    <li><a href="oil.html"               class="hover:text-white transition-colors">Online Lekérdezések</a></li>
+                    <li><a href="miert-valasszon.html"   class="hover:text-white transition-colors">Miért Qsoft?</a></li>
+                    <li><a href="referencia.html"        class="hover:text-white transition-colors">Referenciák</a></li>
+                    <li><a href="hirek.html"             class="hover:text-white transition-colors">Hírek</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="text-white font-semibold text-sm mb-4">Kapcsolat</div>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-start gap-2"><span class="ms text-slate-500 mt-0.5" style="font-size:1rem">location_on</span><span>1119 Budapest,<br>Fehérvári út 85. I. emelet</span></li>
+                    <li class="flex items-center gap-2"><span class="ms text-slate-500" style="font-size:1rem">call</span><a href="tel:+3613654446" class="hover:text-white transition-colors">+36 (1) 365-4446</a></li>
+                    <li class="flex items-center gap-2"><span class="ms text-slate-500" style="font-size:1rem">mail</span><a href="mailto:ertekesites@sup.hu" class="hover:text-white transition-colors">ertekesites@sup.hu</a></li>
+                    <li class="flex items-center gap-2"><span class="ms text-slate-500" style="font-size:1rem">schedule</span><span>H–P 9:00–17:00</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-navy-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
+            <div>© 2026 Qsoft Kft. — Minden jog fenntartva.</div>
+            <div class="flex gap-6">
+                <a href="rolunk.html"           class="hover:text-white transition-colors">Rólunk</a>
+                <a href="minosegpolitikank.html" class="hover:text-white transition-colors">Minőségpolitika</a>
+                <a href="kapcsolat.html"         class="hover:text-white transition-colors">Kapcsolat</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<script>
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e,i) => { if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*80); obs.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    fadeEls.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

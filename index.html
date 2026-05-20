@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="hu" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +6,7 @@
     <title>Qsoft Kft. — SUP Vállalatirányítási Rendszer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="fonts.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -25,7 +25,7 @@
                         },
                         accent: { DEFAULT: '#0EA5E9', dark: '#0284C7' },
                     },
-                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+                    fontFamily: { sans: ['Planer', 'system-ui', 'sans-serif'] },
                 }
             }
         }
@@ -50,7 +50,7 @@
         <div class="flex items-center justify-between h-16">
             <!-- Logo -->
             <a href="index.html" class="flex items-center">
-                <img src="assets/images/qsoft-logo-modern.svg" alt="Qsoft Kft." class="h-9 w-auto">
+                <img src="assets/images/qsoft-logo.png" alt="Qsoft Kft." class="h-9 w-auto">
             </a>
 
             <!-- Nav links -->
@@ -88,7 +88,7 @@
 <!-- ═══════════════════ HERO ═══════════════════ -->
 <section class="gradient-hero min-h-screen flex items-center pt-16">
     <div class="max-w-7xl mx-auto px-4 lg:px-8 py-20 w-full">
-        <div class="max-w-3xl">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
             <div>
                 <div class="inline-flex items-center gap-2 bg-navy-700/50 text-accent text-sm font-medium px-4 py-2 rounded-full mb-8 border border-navy-600/50">
                     <span class="ms" style="font-size:1rem">verified</span>
@@ -109,7 +109,9 @@
                     </a>
                 </div>
             </div>
-
+            <div class="hidden lg:flex items-center justify-center">
+                <img src="assets/images/sup-iroda.gif" alt="SUP Vállalatirányítási Rendszer" class="rounded-2xl shadow-2xl w-full max-w-xl border border-navy-700/30">
+            </div>
         </div>
     </div>
 </section>
@@ -260,12 +262,8 @@
                 <h2 class="text-4xl font-bold text-navy-900 mb-8">Több mint szoftver —<br>megbízható partner</h2>
                 <div class="grid grid-cols-2 gap-3">
                     <div class="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-200">
-                        <span class="ms text-navy-700 flex-shrink-0">history</span>
-                        <span class="text-slate-700 text-xs font-medium">Több mint 30 éves szakmai tapasztalat</span>
-                    </div>
-                    <div class="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-200">
-                        <span class="ms text-navy-700 flex-shrink-0">devices</span>
-                        <span class="text-slate-700 text-xs font-medium">Felhasználóbarát kezelőfelület</span>
+                        <span class="ms text-navy-700 flex-shrink-0">support_agent</span>
+                        <span class="text-slate-700 text-xs font-medium">Jól felépített help desk szolgáltatás</span>
                     </div>
                     <div class="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-200">
                         <span class="ms text-navy-700 flex-shrink-0">support_agent</span>
@@ -341,20 +339,16 @@
                         <span class="text-slate-700 text-xs font-medium">OCR számlafeldolgozás</span>
                     </div>
                     <div class="bg-white rounded-xl p-4 border border-slate-200 flex items-center gap-3">
-                        <span class="ms text-navy-700">table_chart</span>
-                        <span class="text-slate-700 text-xs font-medium">Excel bővítmény</span>
-                    </div>
-                    <div class="bg-white rounded-xl p-4 border border-slate-200 flex items-center gap-3">
-                        <span class="ms text-navy-700">devices</span>
-                        <span class="text-slate-700 text-xs font-medium">Távoli munkavégzés</span>
+                        <span class="ms text-navy-700">cloud</span>
+                        <span class="text-slate-700 text-xs font-medium">Microsoft Azure hosting</span>
                     </div>
                     <div class="bg-white rounded-xl p-4 border border-slate-200 flex items-center gap-3">
                         <span class="ms text-navy-700">business</span>
                         <span class="text-slate-700 text-xs font-medium">Több cég kezelése</span>
                     </div>
                     <div class="bg-white rounded-xl p-4 border border-slate-200 flex items-center gap-3">
-                        <span class="ms text-navy-700">usb</span>
-                        <span class="text-slate-700 text-xs font-medium">USB-ről futtatható</span>
+                        <span class="ms text-navy-700">workspace_premium</span>
+                        <span class="text-slate-700 text-xs font-medium">Könyvvizsgáló barát</span>
                     </div>
                     <div class="bg-white rounded-xl p-4 border border-slate-200 flex items-center gap-3">
                         <span class="ms text-navy-700">verified_user</span>
@@ -479,8 +473,8 @@
         </div>
         <div class="grid md:grid-cols-3 gap-6">
             <a href="hirek.html" class="card-hover fade-in bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 block">
-                <div class="h-40 bg-gradient-to-br from-navy-700 to-navy-900 flex items-center justify-center">
-                    <span class="ms text-white opacity-30" style="font-size:3.5rem">swap_horiz</span>
+                <div class="h-40 overflow-hidden bg-slate-200">
+                    <img src="https://www.qsoft.hu/wp-content/uploads/2026/04/Gemini_Generated_Image_l8lubhl8lubhl8lu-848x480.png" alt="Májusi rendszerváltás" class="w-full h-full object-cover">
                 </div>
                 <div class="p-6">
                     <div class="text-xs text-slate-400 mb-2">2026. április 18.</div>
@@ -489,8 +483,8 @@
                 </div>
             </a>
             <a href="hirek.html" class="card-hover fade-in bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 block">
-                <div class="h-40 bg-gradient-to-br from-emerald-700 to-emerald-900 flex items-center justify-center">
-                    <span class="ms text-white opacity-30" style="font-size:3.5rem">document_scanner</span>
+                <div class="h-40 overflow-hidden bg-slate-100">
+                    <img src="assets/images/digitalizalas.png" alt="Bizonylatok digitalizálása" class="w-full h-full object-contain p-4">
                 </div>
                 <div class="p-6">
                     <div class="text-xs text-slate-400 mb-2">2026. január 7.</div>
@@ -499,8 +493,8 @@
                 </div>
             </a>
             <a href="hirek.html" class="card-hover fade-in bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 block">
-                <div class="h-40 bg-gradient-to-br from-violet-700 to-violet-900 flex items-center justify-center">
-                    <span class="ms text-white opacity-30" style="font-size:3.5rem">smart_toy</span>
+                <div class="h-40 overflow-hidden bg-slate-800">
+                    <img src="assets/images/sup-iroda.gif" alt="AI a SUP fejlesztésében" class="w-full h-full object-cover">
                 </div>
                 <div class="p-6">
                     <div class="text-xs text-slate-400 mb-2">2025. május 29.</div>
@@ -573,7 +567,7 @@
         <div class="grid md:grid-cols-4 gap-10 mb-12">
             <div>
                 <div class="mb-4">
-                    <img src="assets/images/qsoft-logo-modern.svg" alt="Qsoft Kft." class="h-10 w-auto">
+                    <img src="assets/images/qsoft-logo.png" alt="Qsoft Kft." class="h-10 w-auto">
                 </div>
                 <p class="text-sm leading-relaxed mb-4">100% magyar tulajdonú szoftverfejlesztő cég, 1991 óta.</p>
                 <a href="https://www.facebook.com/Qsoftkft" class="inline-flex items-center gap-2 text-slate-500 hover:text-white text-xs transition-colors">
