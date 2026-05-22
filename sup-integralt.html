@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SUP Integrált Vállalatirányítási Rendszer – Qsoft Kft.</title>
   <meta name="description" content="A SUP Vállalatirányítási Rendszert belföldi és nemzetközi tevékenységet folytató gazdálkodó egységek részére terveztük.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="hu_HU">
+  <meta property="og:site_name" content="Qsoft Kft.">
+  <meta property="og:url" content="https://qsoft.hu/sup-integralt.html">
+  <meta property="og:title" content="SUP Integrált Vállalatirányítási Rendszer – Qsoft Kft.">
+  <meta property="og:description" content="A SUP Vállalatirányítási Rendszert belföldi és nemzetközi tevékenységet folytató gazdálkodó egységek részére terveztük.">
+  <meta property="og:image" content="https://qsoft.hu/pages/02_sup-integralt/images/SUP-1.jpg">
   <style>
     @font-face {
       font-family: 'Planer';
@@ -157,7 +164,11 @@
       .btn-header { display: none; }
       .hamburger { display: flex; }
     }
+    /* ── Active nav state ── */
+    .nav-desktop > a.nav-active { color: var(--blue); background: var(--blue-light); font-weight: 600; }
+    .nav-item.nav-active-parent > a { color: var(--blue) !important; background: var(--blue-light) !important; }
   </style>
+  <link rel="canonical" href="https://qsoft.hu/sup-integralt.html">
 </head>
 <body>
 
@@ -414,7 +425,19 @@
     entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); fadeObserver.unobserve(entry.target); } });
   }, { threshold: 0.12 });
   document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
-</script>
+  // Active nav state
+  (function(){
+    var page=location.pathname.split('/').pop()||'index.html';
+    document.querySelectorAll('.nav-desktop > a').forEach(function(a){
+      var href=(a.getAttribute('href')||'').split('#')[0];
+      if(href && href===page) a.classList.add('nav-active');
+    });
+    var swP=['sup-integralt','tip-iratkezelo','online-informacios','excel-fugvenycsomag','referencia-lista','szamviteli','penzugyi','targyi','raktari','szamlazas','szerzodes','hazi-penztar','merleg','mukodesi'];
+    if(swP.some(function(p){return page.indexOf(p)!==-1;})){
+      var ni=document.getElementById('nav-szoftverek');
+      if(ni) ni.classList.add('nav-active-parent');
+    }
+  })();</script>
 </body>
 </html>
 

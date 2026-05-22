@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vásárlás és rendszerbevezetés – Qsoft Kft.</title>
   <meta name="description" content="Qsoft SUP rendszer vásárlása és bevezetése — kapcsolatfelvétel, árajánlat, szerződéskötés, üzembe helyezés, ügyféltámogatás. Bérleti és vásárlási konstrukció.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="hu_HU">
+  <meta property="og:site_name" content="Qsoft Kft.">
+  <meta property="og:url" content="https://qsoft.hu/vasarlas-es-rendszerbevezetes.html">
+  <meta property="og:title" content="Vásárlás és rendszerbevezetés – Qsoft Kft.">
+  <meta property="og:description" content="Qsoft SUP rendszer vásárlása és bevezetése — kapcsolatfelvétel, árajánlat, szerződéskötés, üzembe helyezés, ügyféltámogatás. Bérleti és vásárlási konstrukció.">
+  <meta property="og:image" content="https://qsoft.hu/pages/02_sup-integralt/images/SUP-1.jpg">
   <style>
     @font-face{font-family:'Planer';src:url('fonts/Planer-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
     @font-face{font-family:'Planer';src:url('fonts/Planer-DemiBold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap;}
@@ -88,7 +95,11 @@
     .fade-in-delay-1{transition-delay:0.1s;}.fade-in-delay-2{transition-delay:0.2s;}.fade-in-delay-3{transition-delay:0.3s;}
     @media(max-width:1023px){.footer-top{grid-template-columns:1fr 1fr;}.contact-inner{grid-template-columns:1fr;}.contact-details{align-items:flex-start;}}
     @media(max-width:767px){.container{padding:0 20px;}.section{padding:56px 0;}.process-item{grid-template-columns:auto 1fr;gap:20px;}.footer-top{grid-template-columns:1fr;}.footer-bottom{flex-direction:column;text-align:center;}.nav-desktop{display:none;}.btn-header{display:none;}.hamburger{display:flex;}}
+    /* ── Active nav state ── */
+    .nav-desktop > a.nav-active { color: var(--blue); background: var(--blue-light); font-weight: 600; }
+    .nav-item.nav-active-parent > a { color: var(--blue) !important; background: var(--blue-light) !important; }
   </style>
+  <link rel="canonical" href="https://qsoft.hu/vasarlas-es-rendszerbevezetes.html">
 </head>
 <body>
 <header id="site-header">
@@ -264,7 +275,19 @@
   document.addEventListener('click',()=>navSzoftverek.classList.remove('open'));
   const fadeObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');fadeObserver.unobserve(entry.target);}});},{threshold:0.12});
   document.querySelectorAll('.fade-in').forEach(el=>fadeObserver.observe(el));
-</script>
+  // Active nav state
+  (function(){
+    var page=location.pathname.split('/').pop()||'index.html';
+    document.querySelectorAll('.nav-desktop > a').forEach(function(a){
+      var href=(a.getAttribute('href')||'').split('#')[0];
+      if(href && href===page) a.classList.add('nav-active');
+    });
+    var swP=['sup-integralt','tip-iratkezelo','online-informacios','excel-fugvenycsomag','referencia-lista','szamviteli','penzugyi','targyi','raktari','szamlazas','szerzodes','hazi-penztar','merleg','mukodesi'];
+    if(swP.some(function(p){return page.indexOf(p)!==-1;})){
+      var ni=document.getElementById('nav-szoftverek');
+      if(ni) ni.classList.add('nav-active-parent');
+    }
+  })();</script>
 </body>
 </html>
 

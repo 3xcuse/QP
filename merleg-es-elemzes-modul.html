@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mérleg és elemzés modul – SUP – Qsoft Kft.</title>
   <meta name="description" content="A SUP Mérleg és elemzés modulja — mérleg és eredménykimutatás táblázatok, önelszámoló egységek, audit export, többnyelvű riportok.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="hu_HU">
+  <meta property="og:site_name" content="Qsoft Kft.">
+  <meta property="og:url" content="https://qsoft.hu/merleg-es-elemzes-modul.html">
+  <meta property="og:title" content="Mérleg és elemzés modul – SUP – Qsoft Kft.">
+  <meta property="og:description" content="A SUP Mérleg és elemzés modulja — mérleg és eredménykimutatás táblázatok, önelszámoló egységek, audit export, többnyelvű riportok.">
+  <meta property="og:image" content="https://qsoft.hu/pages/02_sup-integralt/images/SUP-1.jpg">
   <style>
     @font-face{font-family:'Planer';src:url('fonts/Planer-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
     @font-face{font-family:'Planer';src:url('fonts/Planer-DemiBold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap;}
@@ -92,7 +99,11 @@
     .lb-close{position:absolute;top:20px;right:24px;font-size:32px;color:#fff;cursor:pointer;line-height:1;user-select:none;opacity:.8;transition:opacity .2s;}
     .lb-close:hover{opacity:1;}
     .screenshot-grid img{cursor:zoom-in;}
+    /* ── Active nav state ── */
+    .nav-desktop > a.nav-active { color: var(--blue); background: var(--blue-light); font-weight: 600; }
+    .nav-item.nav-active-parent > a { color: var(--blue) !important; background: var(--blue-light) !important; }
   </style>
+  <link rel="canonical" href="https://qsoft.hu/merleg-es-elemzes-modul.html">
 </head>
 <body>
 <header id="site-header">
@@ -256,7 +267,19 @@
   lb.addEventListener('click',e=>{if(e.target!==lbImg)closeLb();});
   lb.querySelector('.lb-close').addEventListener('click',closeLb);
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
-</script>
+  // Active nav state
+  (function(){
+    var page=location.pathname.split('/').pop()||'index.html';
+    document.querySelectorAll('.nav-desktop > a').forEach(function(a){
+      var href=(a.getAttribute('href')||'').split('#')[0];
+      if(href && href===page) a.classList.add('nav-active');
+    });
+    var swP=['sup-integralt','tip-iratkezelo','online-informacios','excel-fugvenycsomag','referencia-lista','szamviteli','penzugyi','targyi','raktari','szamlazas','szerzodes','hazi-penztar','merleg','mukodesi'];
+    if(swP.some(function(p){return page.indexOf(p)!==-1;})){
+      var ni=document.getElementById('nav-szoftverek');
+      if(ni) ni.classList.add('nav-active-parent');
+    }
+  })();</script>
 </body>
 </html>
 
