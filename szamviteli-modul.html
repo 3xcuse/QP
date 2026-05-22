@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="hu">
 <head>
   <meta charset="UTF-8">
@@ -76,7 +76,7 @@
 
     /* Screenshot grid */
     .screenshot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-    .screenshot-grid img{width:100%;border-radius:8px;border:1px solid var(--gray-200);transition:transform var(--transition),box-shadow var(--transition);}
+    .screenshot-grid img{width:100%;border-radius:8px;border:1px solid var(--gray-200);aspect-ratio:16/10;object-fit:cover;transition:transform var(--transition),box-shadow var(--transition);}
     .screenshot-grid img:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
 
     /* Hero image */
@@ -325,3 +325,4 @@
 </script>
 </body>
 </html>
+
