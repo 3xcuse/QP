@@ -85,6 +85,12 @@
     .fade-in-delay-1{transition-delay:0.1s;}.fade-in-delay-2{transition-delay:0.2s;}.fade-in-delay-3{transition-delay:0.3s;}
     @media(max-width:1023px){.footer-top{grid-template-columns:1fr 1fr;}.feature-cards{grid-template-columns:1fr 1fr;}}
     @media(max-width:767px){.container{padding:0 20px;}.section{padding:56px 0;}.feature-cards{grid-template-columns:1fr;}.screenshot-grid{grid-template-columns:1fr;}.footer-top{grid-template-columns:1fr;}.footer-bottom{flex-direction:column;text-align:center;}.nav-desktop{display:none;}.btn-header{display:none;}.hamburger{display:flex;}}
+  .lb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9000;align-items:center;justify-content:center;cursor:zoom-out;}
+    .lb-overlay.open{display:flex;}
+    .lb-img{max-width:90vw;max-height:88vh;border-radius:8px;box-shadow:0 24px 80px rgba(0,0,0,.6);object-fit:contain;}
+    .lb-close{position:absolute;top:20px;right:24px;font-size:32px;color:#fff;cursor:pointer;line-height:1;user-select:none;opacity:.8;transition:opacity .2s;}
+    .lb-close:hover{opacity:1;}
+    .screenshot-grid img{cursor:zoom-in;}
   </style>
 </head>
 <body>
@@ -234,7 +240,16 @@
   document.addEventListener('click',()=>navSzoftverek.classList.remove('open'));
   const fadeObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');fadeObserver.unobserve(entry.target);}});},{threshold:0.12});
   document.querySelectorAll('.fade-in').forEach(el=>fadeObserver.observe(el));
+  // Lightbox
+  const lb=document.createElement('div');lb.className='lb-overlay';lb.innerHTML='<span class="lb-close">✕</span><img class="lb-img" src="" alt="">';document.body.appendChild(lb);
+  const lbImg=lb.querySelector('.lb-img');
+  document.querySelectorAll('.screenshot-grid img').forEach(img=>{img.addEventListener('click',()=>{lbImg.src=img.src;lbImg.alt=img.alt;lb.classList.add('open');document.body.style.overflow='hidden';});});
+  function closeLb(){lb.classList.remove('open');document.body.style.overflow='';}
+  lb.addEventListener('click',e=>{if(e.target!==lbImg)closeLb();});
+  lb.querySelector('.lb-close').addEventListener('click',closeLb);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
 </script>
 </body>
 </html>
+
 
