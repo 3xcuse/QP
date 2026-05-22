@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qsoft Design Book</title>
+  <style>
+    @font-face{font-family:'Planer';src:url('fonts/Planer-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+    @font-face{font-family:'Planer';src:url('fonts/Planer-DemiBold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap;}
+
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Planer',system-ui,sans-serif;background:#f8f9fb;color:#111827;line-height:1.6;}
+
+    :root{
+      --blue:#1e3184;--blue-dark:#162560;--blue-light:#e8ecf7;
+      --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;
+      --gray-500:#6b7280;--gray-600:#6e7681;--gray-700:#374151;--gray-900:#111827;--dark:#0f172a;
+      --radius:12px;
+      --shadow-sm:0 1px 3px rgba(0,0,0,.08);
+      --shadow-md:0 4px 16px rgba(0,0,0,.10);
+      --shadow-lg:0 10px 40px rgba(0,0,0,.14);
+      --transition:0.25s ease;
+    }
+
+    /* ── Layout ── */
+    .db-layout{display:grid;grid-template-columns:220px 1fr;min-height:100vh;}
+    .db-sidebar{position:fixed;top:0;left:0;width:220px;height:100vh;background:var(--dark);overflow-y:auto;padding:24px 0;}
+    .db-main{margin-left:220px;padding:48px 56px;max-width:1100px;}
+
+    /* ── Sidebar ── */
+    .db-logo{padding:0 24px 24px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:16px;}
+    .db-logo-q{font-size:22px;font-weight:600;color:#fff;letter-spacing:-0.03em;}
+    .db-logo-soft{font-size:22px;font-weight:400;color:rgba(255,255,255,.4);letter-spacing:-0.03em;}
+    .db-logo-tag{display:block;font-size:11px;color:rgba(255,255,255,.3);margin-top:4px;letter-spacing:.06em;text-transform:uppercase;}
+    .db-nav-group{padding:0 24px;margin-bottom:8px;}
+    .db-nav-group-label{font-size:10px;font-weight:600;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase;padding:12px 0 6px;}
+    .db-nav-group a{display:block;font-size:13px;color:rgba(255,255,255,.55);padding:6px 0;text-decoration:none;transition:color var(--transition);}
+    .db-nav-group a:hover{color:#fff;}
+    .db-nav-group a.active{color:#fff;font-weight:600;}
+
+    /* ── Section ── */
+    .db-section{margin-bottom:72px;}
+    .db-section-title{font-size:28px;font-weight:600;color:var(--gray-900);margin-bottom:6px;letter-spacing:-0.02em;padding-bottom:16px;border-bottom:2px solid var(--blue-light);}
+    .db-section-sub{font-size:15px;color:var(--gray-500);margin-bottom:36px;margin-top:8px;}
+    .db-subsection{margin-bottom:40px;}
+    .db-subsection-title{font-size:13px;font-weight:600;color:var(--gray-500);letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;}
+
+    /* ── Token grid ── */
+    .token-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;}
+    .token-swatch{border-radius:10px;overflow:hidden;border:1px solid var(--gray-200);background:#fff;}
+    .token-color{height:64px;}
+    .token-info{padding:10px 12px;}
+    .token-name{font-size:12px;font-weight:600;color:var(--gray-900);}
+    .token-value{font-size:11px;color:var(--gray-500);font-family:monospace;margin-top:2px;}
+
+    /* ── Typography ── */
+    .type-row{padding:20px 24px;background:#fff;border-radius:var(--radius);border:1px solid var(--gray-200);margin-bottom:12px;display:flex;align-items:baseline;gap:24px;}
+    .type-label{font-size:11px;font-weight:600;color:var(--gray-500);letter-spacing:.06em;text-transform:uppercase;min-width:120px;flex-shrink:0;}
+    .type-meta{font-size:11px;color:var(--gray-500);font-family:monospace;min-width:140px;flex-shrink:0;}
+
+    /* ── Spacing ── */
+    .spacing-row{display:flex;align-items:center;gap:16px;margin-bottom:10px;}
+    .spacing-bar{background:var(--blue-light);border-radius:4px;height:20px;flex-shrink:0;}
+    .spacing-label{font-size:12px;font-weight:600;color:var(--gray-900);min-width:40px;}
+    .spacing-value{font-size:11px;color:var(--gray-500);font-family:monospace;}
+
+    /* ── Shadow ── */
+    .shadow-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+    .shadow-card{background:#fff;border-radius:var(--radius);padding:32px 24px;text-align:center;}
+    .shadow-label{font-size:12px;font-weight:600;color:var(--gray-700);margin-top:12px;}
+    .shadow-value{font-size:11px;color:var(--gray-500);font-family:monospace;margin-top:4px;line-height:1.5;}
+
+    /* ── Preview box ── */
+    .preview{background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);padding:32px;margin-bottom:16px;}
+    .preview.dark{background:var(--dark);}
+    .preview.gray{background:var(--gray-50);}
+    .preview-label{font-size:11px;font-weight:600;color:var(--gray-500);letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;}
+
+    /* ── Code block ── */
+    .code{background:#0f172a;color:#e2e8f0;border-radius:8px;padding:16px 20px;font-family:monospace;font-size:12px;line-height:1.7;overflow-x:auto;margin-top:12px;}
+    .code .kw{color:#93c5fd;}
+    .code .str{color:#86efac;}
+    .code .prop{color:#f9a8d4;}
+    .code .val{color:#fde68a;}
+    .code .comment{color:#475569;}
+
+    /* ══════════════════════════
+       DESIGN SYSTEM COMPONENTS
+    ══════════════════════════ */
+
+    /* Buttons */
+    .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;font-family:'Planer',system-ui,sans-serif;font-size:15px;font-weight:600;padding:14px 28px;border-radius:10px;border:none;cursor:pointer;transition:background var(--transition),transform var(--transition),box-shadow var(--transition);text-decoration:none;}
+    .btn-primary:hover{background:var(--blue-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(30,49,132,.35);}
+    .btn-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--blue);font-family:'Planer',system-ui,sans-serif;font-size:15px;font-weight:600;padding:14px 28px;border-radius:10px;border:2px solid var(--blue);cursor:pointer;transition:background var(--transition),transform var(--transition);text-decoration:none;}
+    .btn-secondary:hover{background:var(--blue-light);transform:translateY(-2px);}
+    .btn-sm{padding:9px 18px;font-size:13px;border-radius:8px;}
+    .btn-ghost{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--blue);font-family:'Planer',system-ui,sans-serif;font-size:14px;font-weight:600;cursor:pointer;padding:4px 0;}
+
+    /* Badges */
+    .badge{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:.04em;text-transform:uppercase;}
+    .badge-blue{background:var(--blue);color:#fff;}
+    .badge-light{background:var(--blue-light);color:var(--blue);}
+    .badge-ajanlat{background:#fef3c7;color:#92400e;}
+    .badge-megoldas{background:#d1fae5;color:#065f46;}
+    .badge-fejlesztes{background:#dbeafe;color:#1e40af;}
+    .badge-unnepi{background:#fce7f3;color:#9d174d;}
+    .badge-ujmodul{background:#ccfbf1;color:#134e4a;}
+    .badge-miert{background:#ede9fe;color:#5b21b6;}
+
+    /* Cards */
+    .card{background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);padding:28px;transition:transform var(--transition),box-shadow var(--transition);}
+    .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+    .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+
+    /* Feature box */
+    .feature-box{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius);padding:32px;}
+    .feature-box h3{font-size:14px;font-weight:600;color:var(--blue);margin-bottom:16px;text-transform:uppercase;letter-spacing:.04em;}
+    .feature-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+    .feature-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--gray-700);}
+    .feature-list li::before{content:'✓';color:var(--blue);font-weight:700;flex-shrink:0;}
+
+    /* News card */
+    .news-card{background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);overflow:hidden;transition:transform var(--transition),box-shadow var(--transition);}
+    .news-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+    .news-card-img-placeholder{width:100%;aspect-ratio:16/7;background:linear-gradient(135deg,var(--blue) 0%,var(--blue-dark) 100%);display:flex;align-items:center;justify-content:center;font-size:32px;}
+    .news-card-body{padding:20px 24px 24px;}
+    .news-card h3{font-size:17px;font-weight:600;color:var(--gray-900);margin-bottom:8px;line-height:1.4;}
+    .news-card p{font-size:14px;color:var(--gray-500);line-height:1.6;margin-bottom:16px;}
+    .news-link{font-size:14px;color:var(--blue);font-weight:600;}
+
+    /* Page hero */
+    .page-hero-demo{padding:48px;background:linear-gradient(160deg,#fff 70%,var(--blue-light));border-bottom:3px solid var(--blue);border-radius:var(--radius);}
+    .breadcrumb{font-size:13px;color:var(--gray-500);margin-bottom:12px;}
+    .breadcrumb a{color:var(--blue);text-decoration:none;}
+
+    /* CTA bar */
+    .cta-bar-demo{background:var(--blue);color:#fff;padding:48px;text-align:center;border-radius:var(--radius);}
+    .cta-bar-demo h2{font-size:24px;font-weight:600;margin-bottom:8px;}
+    .cta-bar-demo p{font-size:15px;color:rgba(255,255,255,.75);margin-bottom:24px;}
+    .btn-white{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--blue);font-family:'Planer',system-ui,sans-serif;font-size:15px;font-weight:600;padding:14px 28px;border-radius:10px;border:none;cursor:pointer;text-decoration:none;}
+
+    /* Nav demo */
+    .nav-demo{background:rgba(255,255,255,.96);border:1px solid var(--gray-200);border-radius:var(--radius);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow-sm);}
+    .nav-demo-links{display:flex;align-items:center;gap:4px;}
+    .nav-demo-link{font-size:14px;font-weight:500;color:var(--gray-700);padding:8px 14px;border-radius:8px;text-decoration:none;}
+    .nav-demo-link:hover,.nav-demo-link.active{color:var(--blue);background:var(--blue-light);}
+    .nav-demo-cta{font-size:13px;font-weight:600;color:#fff;background:var(--blue);padding:8px 18px;border-radius:8px;text-decoration:none;}
+
+    /* Stats */
+    .stats-demo{background:var(--blue);color:#fff;border-radius:var(--radius);padding:32px;}
+    .stats-demo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+    .stat-item{text-align:center;padding:16px;border-right:1px solid rgba(255,255,255,.15);}
+    .stat-item:last-child{border-right:none;}
+    .stat-num{font-size:36px;font-weight:600;}
+    .stat-label{font-size:13px;color:rgba(255,255,255,.7);}
+
+    /* Inputs */
+    .form-group{margin-bottom:20px;}
+    .form-label{display:block;font-size:13px;font-weight:600;color:var(--gray-700);margin-bottom:6px;}
+    .form-input{width:100%;padding:12px 16px;border:1px solid var(--gray-200);border-radius:10px;font-family:'Planer',system-ui,sans-serif;font-size:15px;color:var(--gray-900);outline:none;transition:border-color var(--transition),box-shadow var(--transition);}
+    .form-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(30,49,132,.12);}
+    .form-textarea{resize:vertical;min-height:100px;}
+
+    /* Notification strip */
+    .notif{padding:12px 20px;border-radius:10px;font-size:14px;font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+    .notif-info{background:var(--blue-light);color:var(--blue);}
+    .notif-success{background:#d1fae5;color:#065f46;}
+    .notif-warn{background:#fef3c7;color:#92400e;}
+    .notif-error{background:#fee2e2;color:#991b1b;}
+
+    /* Divider */
+    .db-divider{height:1px;background:var(--gray-200);margin:32px 0;}
+
+    /* Pill tabs */
+    .pill-tabs{display:flex;gap:8px;flex-wrap:wrap;}
+    .pill-tab{font-size:13px;font-weight:500;padding:8px 16px;border-radius:20px;border:1px solid var(--gray-200);background:#fff;cursor:pointer;color:var(--gray-700);transition:all var(--transition);}
+    .pill-tab.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+
+    /* Footer demo */
+    .footer-demo{background:var(--dark);color:rgba(255,255,255,.65);border-radius:var(--radius);padding:40px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;}
+    .footer-demo h5{font-size:12px;font-weight:600;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;}
+    .footer-demo ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+    .footer-demo ul a{font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;}
+    .footer-demo-logo-q{font-size:20px;font-weight:600;color:#fff;}
+    .footer-demo-logo-soft{font-size:20px;font-weight:400;color:rgba(255,255,255,.4);}
+    .footer-demo p{font-size:13px;line-height:1.75;margin-top:10px;}
+
+    /* Responsive */
+    @media(max-width:900px){
+      .db-sidebar{display:none;}
+      .db-main{margin-left:0;padding:32px 24px;}
+      .card-grid,.shadow-grid,.stats-demo-grid{grid-template-columns:1fr;}
+      .footer-demo{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="db-sidebar">
+  <div class="db-logo">
+    <div><span class="db-logo-q">Q</span><span class="db-logo-soft">soft</span></div>
+    <span class="db-logo-tag">Design Book v1.0</span>
+  </div>
+
+  <div class="db-nav-group">
+    <div class="db-nav-group-label">Alapok</div>
+    <a href="#colors">Színek</a>
+    <a href="#typography">Tipográfia</a>
+    <a href="#spacing">Térköz</a>
+    <a href="#shadows">Árnyékok</a>
+    <a href="#radius">Sarok-sugár</a>
+  </div>
+
+  <div class="db-nav-group">
+    <div class="db-nav-group-label">Komponensek</div>
+    <a href="#buttons">Gombok</a>
+    <a href="#badges">Badge-ek</a>
+    <a href="#cards">Kártyák</a>
+    <a href="#forms">Beviteli mezők</a>
+    <a href="#notifications">Értesítések</a>
+  </div>
+
+  <div class="db-nav-group">
+    <div class="db-nav-group-label">Elrendezések</div>
+    <a href="#nav">Navigáció</a>
+    <a href="#hero">Page hero</a>
+    <a href="#stats">Statisztikák</a>
+    <a href="#cta">CTA sáv</a>
+    <a href="#footer-section">Footer</a>
+    <a href="#news-cards">Hír kártyák</a>
+    <a href="#feature-boxes">Feature dobozok</a>
+  </div>
+
+  <div class="db-nav-group">
+    <div class="db-nav-group-label">Haladó</div>
+    <a href="#tokens-css">CSS tokenek</a>
+    <a href="#page-templates">Oldal sablonok</a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="db-main">
+
+  <div style="margin-bottom:48px;">
+    <h1 style="font-size:36px;font-weight:600;color:var(--gray-900);letter-spacing:-0.02em;">Design Book</h1>
+    <p style="font-size:17px;color:var(--gray-500);margin-top:8px;">A Qsoft Kft. weboldalának design rendszere — színek, tipográfia, komponensek, elrendezési minták.</p>
+    <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+      <span class="badge badge-blue">v1.0 — 2026</span>
+      <span class="badge badge-light">Statikus HTML</span>
+      <span class="badge badge-megoldas">Planer font</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════ COLORS ═══════════════ -->
+  <section class="db-section" id="colors">
+    <h2 class="db-section-title">Színek</h2>
+    <p class="db-section-sub">Az összes CSS változó a <code>:root</code> selectorban van definiálva, inline <code>&lt;style&gt;</code> blokkban minden oldalon.</p>
+
+    <div class="db-subsection">
+      <div class="db-subsection-title">Brand</div>
+      <div class="token-grid">
+        <div class="token-swatch">
+          <div class="token-color" style="background:#1e3184;"></div>
+          <div class="token-info"><div class="token-name">--blue</div><div class="token-value">#1e3184</div></div>
+        </div>
+        <div class="token-swatch">
+          <div class="token-color" style="background:#162560;"></div>
+          <div class="token-info"><div class="token-name">--blue-dark</div><div class="token-value">#162560</div></div>
+        </div>
+        <div class="token-swatch">
+          <div class="token-color" style="background:#e8ecf7;"></div>
+          <div class="token-info"><div class="token-name">--blue-light</div><div class="token-value">#e8ecf7</div></div>
+        </div>
+        <div class="token-swatch">
+          <div class="token-color" style="background:#0f172a;"></div>
+          <div class="token-info"><div class="token-name">--dark</div><div class="token-value">#0f172a</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="db-subsection">
+      <div class="db-subsection-title">Szürke skála</div>
+      <div class="token-grid">
+        <div class="token-swatch">
+          <div class="token-color" style="background:#f9fafb;border-bottom:1px solid #e5e7eb;"></div>
+          <div class="token-info"><div class="token-name">--gray-50</div><div class="token-value">#f9fafb</div></div>
+        </div>
+        <div class="token-swatch">
+          <div class="token-color" style="background:#f3f4f6;border-bottom:1px solid #e5e7eb;"></div>
+          <div class="token-info"><div class="token-name">--gray-100</div><div class="token-value">#f3f4f6</div></div>
+        </div>
+        <div class="token-swatch">
+          <div class="token-color" style="background:#e5e7eb;"></div>
+          <div class="token-info"><div class="token-name">--gray-200</div><div class="token-value">#e5e7eb</div></div>
+        </div>
+        <div class="token-swatch">
+          <div class="token-color" style="background:#6b7280;"></div>
+          <div class="token-info"><div class="token-name">--gray-500</div><div class="token-value">#6b7280</div></div>
+        </div>
+        <div class="token-swatch">
+          <div class="token-color" style="background:#6e7681;"></div>
+          <div class="token-info"><div class="token-name">--gray-600</div><div class="token-value">#6e7681</div></div>
+        </div>
+        <div class="token-swatch">
+          <div class="token-color" style="background:#374151;"></div>
+          <div class="token-info"><div class="token-name">--gray-700</div><div class="token-value">#374151</div></div>
+        </div>
+        <div class="token-swatch">
+          <div class="token-color" style="background:#111827;"></div>
+          <div class="token-info"><div class="token-name">--gray-900</div><div class="token-value">#111827</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="db-subsection">
+      <div class="db-subsection-title">Badge színek (státusz)</div>
+      <div class="token-grid">
+        <div class="token-swatch">
+          <div class="token-color" style="background:#fef3c7;"></div>
+          <div class="token-info"><div class="token-name">Ajánlat</div><div class="token-value">#fef3c7 / #92400e</div></div>
+        </div>
+        <div class="token-swatch">
+          <div class="token-color" style="background:#d1fae5;"></div>
+          <div class="token-info"><div class="token-name">Megoldás</div><div class="token-value">#d1fae5 / #065f46</div></div>
+        </div>
+        <div class="token-swatch">
+          <div class="token-color" style="background:#dbeafe;"></div>
+          <div class="token-info"><div class="token-name">Fejlesztés</div><div class="token-value">#dbeafe / #1e40af</div></div>
+        </div>
+        <div class="token-swatch">
+          <div class="token-color" style="background:#fce7f3;"></div>
+          <div class="token-info"><div class="token-name">Ünnepi</div><div class="token-value">#fce7f3 / #9d174d</div></div>
+        </div>
+        <div class="token-swatch">
+          <div class="token-color" style="background:#ccfbf1;"></div>
+          <div class="token-info"><div class="token-name">Új modul</div><div class="token-value">#ccfbf1 / #134e4a</div></div>
+        </div>
+        <div class="token-swatch">
+          <div class="token-color" style="background:#ede9fe;"></div>
+          <div class="token-info"><div class="token-name">Miért mi?</div><div class="token-value">#ede9fe / #5b21b6</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ TYPOGRAPHY ═══════════════ -->
+  <section class="db-section" id="typography">
+    <h2 class="db-section-title">Tipográfia</h2>
+    <p class="db-section-sub">Font: <strong>Planer</strong> (Regular 400 + DemiBold 600), WOFF2, lokálisan hosztolva a <code>fonts/</code> mappából. Fallback: system-ui, -apple-system, sans-serif.</p>
+
+    <div class="type-row">
+      <span class="type-label">Hero title</span>
+      <span style="font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:-0.02em;">Vállalatirányítás</span>
+      <span class="type-meta">clamp(28px,4vw,44px) / 600</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">Section title</span>
+      <span style="font-size:32px;font-weight:600;letter-spacing:-0.02em;">Kiemelt termékeink</span>
+      <span class="type-meta">32px / 600</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">Page title</span>
+      <span style="font-size:28px;font-weight:600;letter-spacing:-0.02em;">Számviteli modul</span>
+      <span class="type-meta">28px / 600</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">Card title</span>
+      <span style="font-size:18px;font-weight:600;">SUP Vállalatirányítás</span>
+      <span class="type-meta">18px / 600</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">Body large</span>
+      <span style="font-size:17px;color:var(--gray-500);line-height:1.75;max-width:400px;">Integrált szoftverek, amelyek az Ön vállalkozásának minden területét lefedik.</span>
+      <span class="type-meta">17px / 400 / gray-500</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">Body</span>
+      <span style="font-size:15px;color:var(--gray-700);line-height:1.8;">A szoftver minden modulja egységes felületen elérhető.</span>
+      <span class="type-meta">15px / 400 / gray-700</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">Caption / meta</span>
+      <span style="font-size:13px;color:var(--gray-500);">Főoldal › SUP Rendszer › Számviteli modul</span>
+      <span class="type-meta">13px / 400 / gray-500</span>
+    </div>
+    <div class="type-row">
+      <span class="type-label">Label / badge</span>
+      <span style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-500);">Kategória</span>
+      <span class="type-meta">11px / 600 / uppercase</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════ SPACING ═══════════════ -->
+  <section class="db-section" id="spacing">
+    <h2 class="db-section-title">Térköz</h2>
+    <p class="db-section-sub">Nincs fix spacing skála token — ezeket a gyakori értékeket használja az oldal következetesen.</p>
+
+    <div class="preview">
+      <div class="spacing-row"><span class="spacing-label">4px</span><div class="spacing-bar" style="width:4px;"></div><span class="spacing-value">ikon gap, kis rés</span></div>
+      <div class="spacing-row"><span class="spacing-label">8px</span><div class="spacing-bar" style="width:8px;"></div><span class="spacing-value">nav gap, padding-sm</span></div>
+      <div class="spacing-row"><span class="spacing-label">12px</span><div class="spacing-bar" style="width:12px;"></div><span class="spacing-value">badge padding, elem elválasztó</span></div>
+      <div class="spacing-row"><span class="spacing-label">16px</span><div class="spacing-bar" style="width:16px;"></div><span class="spacing-value">mob-sub indent, gap-sm</span></div>
+      <div class="spacing-row"><span class="spacing-label">20px</span><div class="spacing-bar" style="width:20px;"></div><span class="spacing-value">kártya body padding-top</span></div>
+      <div class="spacing-row"><span class="spacing-label">24px</span><div class="spacing-bar" style="width:24px;"></div><span class="spacing-value">kártya padding, grid gap</span></div>
+      <div class="spacing-row"><span class="spacing-label">32px</span><div class="spacing-bar" style="width:32px;"></div><span class="spacing-value">container padding (desktop)</span></div>
+      <div class="spacing-row"><span class="spacing-label">48px</span><div class="spacing-bar" style="width:48px;"></div><span class="spacing-value">section belső térköz</span></div>
+      <div class="spacing-row"><span class="spacing-label">64px</span><div class="spacing-bar" style="width:64px;"></div><span class="spacing-value">footer padding, CTA padding</span></div>
+      <div class="spacing-row"><span class="spacing-label">80px</span><div class="spacing-bar" style="width:80px;"></div><span class="spacing-value">section padding (alap)</span></div>
+      <div class="spacing-row"><span class="spacing-label">96px</span><div class="spacing-bar" style="width:96px;"></div><span class="spacing-value">section padding (nagy)</span></div>
+    </div>
+    <p style="font-size:13px;color:var(--gray-500);margin-top:8px;">Container max-width: <strong>1200px</strong> · Padding mobile: <strong>20px</strong></p>
+  </section>
+
+  <!-- ═══════════════ SHADOWS ═══════════════ -->
+  <section class="db-section" id="shadows">
+    <h2 class="db-section-title">Árnyékok</h2>
+    <div class="shadow-grid">
+      <div class="shadow-card" style="box-shadow:var(--shadow-sm);">
+        <div class="shadow-label">--shadow-sm</div>
+        <div class="shadow-value">0 1px 3px rgba(0,0,0,.08)</div>
+      </div>
+      <div class="shadow-card" style="box-shadow:var(--shadow-md);">
+        <div class="shadow-label">--shadow-md</div>
+        <div class="shadow-value">0 4px 16px rgba(0,0,0,.10)</div>
+      </div>
+      <div class="shadow-card" style="box-shadow:var(--shadow-lg);">
+        <div class="shadow-label">--shadow-lg</div>
+        <div class="shadow-value">0 10px 40px rgba(0,0,0,.14)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ RADIUS ═══════════════ -->
+  <section class="db-section" id="radius">
+    <h2 class="db-section-title">Sarok-sugár</h2>
+    <div class="preview" style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <div style="width:80px;height:80px;background:var(--blue-light);border-radius:8px;margin:0 auto 8px;"></div>
+        <div style="font-size:12px;font-weight:600;">8px</div>
+        <div style="font-size:11px;color:var(--gray-500);">gombok, nav linkek</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:80px;height:80px;background:var(--blue-light);border-radius:10px;margin:0 auto 8px;"></div>
+        <div style="font-size:12px;font-weight:600;">10px</div>
+        <div style="font-size:11px;color:var(--gray-500);">CTA gombok</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:80px;height:80px;background:var(--blue-light);border-radius:12px;margin:0 auto 8px;"></div>
+        <div style="font-size:12px;font-weight:600;">--radius (12px)</div>
+        <div style="font-size:11px;color:var(--gray-500);">kártyák, dropdown</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:80px;height:32px;background:var(--blue-light);border-radius:20px;margin:0 auto 8px;margin-top:24px;"></div>
+        <div style="font-size:12px;font-weight:600;">20px</div>
+        <div style="font-size:11px;color:var(--gray-500);">badge-ek, pill</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:44px;height:44px;background:var(--blue);border-radius:50%;margin:0 auto 8px;"></div>
+        <div style="font-size:12px;font-weight:600;">50%</div>
+        <div style="font-size:11px;color:var(--gray-500);">back-to-top gomb</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ BUTTONS ═══════════════ -->
+  <section class="db-section" id="buttons">
+    <h2 class="db-section-title">Gombok</h2>
+
+    <div class="db-subsection">
+      <div class="db-subsection-title">Variánsok</div>
+      <div class="preview" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+        <a href="#" class="btn-primary">Ajánlatot kérek →</a>
+        <a href="#" class="btn-secondary">Vissza a SUP rendszerhez</a>
+        <a href="#" class="btn-primary btn-sm">Kis gomb</a>
+        <button class="btn-ghost">Részletek →</button>
+      </div>
+    </div>
+
+    <div class="db-subsection">
+      <div class="db-subsection-title">Sötét háttéren (CTA bar)</div>
+      <div class="preview dark" style="display:flex;gap:16px;flex-wrap:wrap;">
+        <a href="#" class="btn-white">Ajánlatot kérek →</a>
+        <a href="#" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;font-family:'Planer',system-ui,sans-serif;font-size:15px;font-weight:600;padding:14px 28px;border-radius:10px;border:2px solid rgba(255,255,255,.5);text-decoration:none;">Vissza</a>
+      </div>
+    </div>
+
+    <div class="db-subsection">
+      <div class="db-subsection-title">Header CTA</div>
+      <div class="preview" style="display:flex;gap:12px;">
+        <a href="#" style="display:inline-flex;background:var(--blue);color:#fff;font-family:'Planer',system-ui,sans-serif;font-size:14px;font-weight:600;padding:9px 20px;border-radius:8px;text-decoration:none;">Ajánlatot kérek</a>
+        <a href="#" style="display:inline-flex;background:var(--blue);color:#fff;font-family:'Planer',system-ui,sans-serif;font-size:15px;font-weight:600;padding:12px;border-radius:8px;text-decoration:none;width:100%;max-width:260px;justify-content:center;">Ajánlatot kérek → (mobile)</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ BADGES ═══════════════ -->
+  <section class="db-section" id="badges">
+    <h2 class="db-section-title">Badge-ek</h2>
+    <p class="db-section-sub">Kategória jelölők az aktualitások kártyákon és cikkoldalakon.</p>
+
+    <div class="preview" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <span class="badge badge-blue">Qsoft</span>
+      <span class="badge badge-light">Rendszer</span>
+      <span class="badge badge-ajanlat">Ajánlat</span>
+      <span class="badge badge-megoldas">Megoldás</span>
+      <span class="badge badge-fejlesztes">Fejlesztés</span>
+      <span class="badge badge-unnepi">Ünnepi</span>
+      <span class="badge badge-ujmodul">Új modul</span>
+      <span class="badge badge-miert">Miért mi?</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CARDS ═══════════════ -->
+  <section class="db-section" id="cards">
+    <h2 class="db-section-title">Kártyák</h2>
+
+    <div class="db-subsection">
+      <div class="db-subsection-title">Alap kártyák</div>
+      <div class="card-grid">
+        <div class="card">
+          <div style="font-size:28px;margin-bottom:12px;">🏢</div>
+          <h3 style="font-size:16px;font-weight:600;margin-bottom:8px;">SUP Rendszer</h3>
+          <p style="font-size:14px;color:var(--gray-500);line-height:1.6;margin-bottom:16px;">Integrált vállalatirányítási rendszer hazai vállalkozásoknak.</p>
+          <a href="#" style="font-size:14px;color:var(--blue);font-weight:600;">Részletek →</a>
+        </div>
+        <div class="card">
+          <div style="font-size:28px;margin-bottom:12px;">📁</div>
+          <h3 style="font-size:16px;font-weight:600;margin-bottom:8px;">TIP Iratkezelő</h3>
+          <p style="font-size:14px;color:var(--gray-500);line-height:1.6;margin-bottom:16px;">Beérkező számlák és dokumentumok rendszeres nyilvántartása.</p>
+          <a href="#" style="font-size:14px;color:var(--blue);font-weight:600;">Részletek →</a>
+        </div>
+        <div class="card">
+          <div style="font-size:28px;margin-bottom:12px;">🌐</div>
+          <h3 style="font-size:16px;font-weight:600;margin-bottom:8px;">Online Lekérdezések</h3>
+          <p style="font-size:14px;color:var(--gray-500);line-height:1.6;margin-bottom:16px;">Internet alapú adatlekérdezés menedzserek számára.</p>
+          <a href="#" style="font-size:14px;color:var(--blue);font-weight:600;">Részletek →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="db-subsection" id="news-cards">
+      <div class="db-subsection-title">Hír kártyák (aktualitások)</div>
+      <div class="card-grid">
+        <div class="news-card">
+          <div class="news-card-img-placeholder">📋</div>
+          <div class="news-card-body">
+            <span class="badge badge-ajanlat" style="margin-bottom:10px;">Ajánlat</span>
+            <h3>Májusi rendszerváltás!</h3>
+            <p>Ha nem elégedett jelenlegi rendszerével, itt az alkalom számviteli rendszerének leváltására.</p>
+            <a href="#" class="news-link">Tovább olvasom →</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="news-card-img-placeholder">🔌</div>
+          <div class="news-card-body">
+            <span class="badge badge-fejlesztes" style="margin-bottom:10px;">Fejlesztés</span>
+            <h3>AI szerepe a SUP fejlesztésben</h3>
+            <p>Az MI technológia hogyan segíti rendszerünk folyamatos fejlesztését.</p>
+            <a href="#" class="news-link">Tovább olvasom →</a>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="news-card-img-placeholder" style="background:linear-gradient(135deg,#134e4a,#065f46);">✅</div>
+          <div class="news-card-body">
+            <span class="badge badge-megoldas" style="margin-bottom:10px;">Megoldás</span>
+            <h3>Bizonylatok digitalizálása</h3>
+            <p>Komplett digitalizálási megoldás beérkező és kimenő bizonylatokhoz.</p>
+            <a href="#" class="news-link">Tovább olvasom →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="db-subsection" id="feature-boxes">
+      <div class="db-subsection-title">Feature dobozok (modul oldalak)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div class="feature-box">
+          <h3>Jellemzők</h3>
+          <ul class="feature-list">
+            <li>Főkönyvi könyvelés és devizakezelés</li>
+            <li>ÁFA bevallás és analitika</li>
+            <li>Év végi zárások automatizálva</li>
+            <li>Részletes főkönyvi kivonat</li>
+          </ul>
+        </div>
+        <div class="feature-box">
+          <h3>Lehetőségek</h3>
+          <ul class="feature-list">
+            <li>Metrum és Digitaudit export</li>
+            <li>NAV adatszolgáltatás</li>
+            <li>Bérfeladás integráció</li>
+            <li>API kapcsolat külső rendszerekkel</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FORMS ═══════════════ -->
+  <section class="db-section" id="forms">
+    <h2 class="db-section-title">Beviteli mezők</h2>
+    <div class="preview" style="max-width:480px;">
+      <div class="form-group">
+        <label class="form-label">Cégnév</label>
+        <input type="text" class="form-input" placeholder="Qsoft Kft.">
+      </div>
+      <div class="form-group">
+        <label class="form-label">E-mail cím</label>
+        <input type="email" class="form-input" placeholder="info@cegnev.hu">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Üzenet</label>
+        <textarea class="form-input form-textarea" placeholder="Írja le kérdését..."></textarea>
+      </div>
+      <a href="#" class="btn-primary">Küldés →</a>
+    </div>
+  </section>
+
+  <!-- ═══════════════ NOTIFICATIONS ═══════════════ -->
+  <section class="db-section" id="notifications">
+    <h2 class="db-section-title">Értesítések</h2>
+    <div class="preview" style="max-width:560px;">
+      <div class="notif notif-info">ℹ️ Információ — rendszerfrissítés folyamatban.</div>
+      <div class="notif notif-success">✅ Sikeres — az ajánlatkérés megérkezett.</div>
+      <div class="notif notif-warn">⚠️ Figyelmeztetés — a licensz lejár 30 napon belül.</div>
+      <div class="notif notif-error">❌ Hiba — a kapcsolat nem jött létre.</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ NAV ═══════════════ -->
+  <section class="db-section" id="nav">
+    <h2 class="db-section-title">Navigáció</h2>
+    <p class="db-section-sub">Fix header, 64px magasság, backdrop blur. Dropdown hover + click alapú. Aktív oldal: <code>.nav-active</code> (kék háttér). Aktív szülő dropdown: <code>.nav-active-parent</code>.</p>
+
+    <div class="preview">
+      <div class="nav-demo">
+        <div><span style="font-size:22px;font-weight:600;color:var(--blue);">Q</span><span style="font-size:22px;font-weight:400;color:var(--gray-600);">soft</span></div>
+        <div class="nav-demo-links">
+          <a href="#" class="nav-demo-link">Szoftverek ▾</a>
+          <a href="#" class="nav-demo-link">Modulok</a>
+          <a href="#" class="nav-demo-link active">Szolgáltatások ▾</a>
+          <a href="#" class="nav-demo-link">Kapcsolat</a>
+        </div>
+        <a href="#" class="nav-demo-cta">Ajánlatot kérek</a>
+      </div>
+      <p style="font-size:12px;color:var(--gray-500);margin-top:12px;">Breakpoint: 767px alatt hamburger menü jelenik meg, desktop nav elrejtve.</p>
+    </div>
+
+    <div class="db-subsection" style="margin-top:24px;">
+      <div class="db-subsection-title">Dropdown tartalom (Szoftverek)</div>
+      <div class="preview" style="max-width:280px;padding:12px;">
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <a href="#" style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--gray-700);padding:10px 12px;border-radius:8px;text-decoration:none;transition:background var(--transition);" onmouseover="this.style.background='var(--blue-light)'" onmouseout="this.style.background='transparent'"><span style="font-size:16px;width:22px;text-align:center;">🏢</span>SUP Vállalatirányítási Rendszer</a>
+          <a href="#" style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--gray-700);padding:10px 12px;border-radius:8px;text-decoration:none;" onmouseover="this.style.background='var(--blue-light)'" onmouseout="this.style.background='transparent'"><span style="font-size:16px;width:22px;text-align:center;">📁</span>TIP Iratkezelő Rendszer</a>
+          <div style="height:1px;background:var(--gray-200);margin:4px 0;"></div>
+          <a href="#" style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--gray-700);padding:10px 12px;border-radius:8px;text-decoration:none;" onmouseover="this.style.background='var(--blue-light)'" onmouseout="this.style.background='transparent'"><span style="font-size:16px;width:22px;text-align:center;">🧩</span>Összes modul</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="db-section" id="hero">
+    <h2 class="db-section-title">Page hero</h2>
+    <p class="db-section-sub">Belső oldalak fejléce — breadcrumb + cím + alcím. Gradient háttér, kék alsó border. Padding: 120px top (header miatt).</p>
+
+    <div class="page-hero-demo">
+      <div class="breadcrumb">
+        <a href="#">Főoldal</a> › <a href="#">SUP Rendszer</a> › Számviteli modul
+      </div>
+      <h1 style="font-size:36px;font-weight:600;color:var(--gray-900);letter-spacing:-0.02em;margin-bottom:12px;">Számviteli modul</h1>
+      <p style="font-size:17px;color:var(--gray-500);max-width:600px;line-height:1.75;">A SUP Integrált Vállalatirányítási Rendszer különböző moduljaiban rögzített adatok a számviteli modulban koncentrálódnak.</p>
+    </div>
+    <p style="font-size:12px;color:var(--gray-500);margin-top:8px;">CSS: <code>background: linear-gradient(160deg, #fff 70%, var(--blue-light)); border-bottom: 3px solid var(--blue);</code></p>
+  </section>
+
+  <!-- ═══════════════ STATS ═══════════════ -->
+  <section class="db-section" id="stats">
+    <h2 class="db-section-title">Statisztika sáv</h2>
+    <div class="stats-demo">
+      <div class="stats-demo-grid">
+        <div class="stat-item"><div class="stat-num">25+</div><div class="stat-label">Év tapasztalat</div></div>
+        <div class="stat-item"><div class="stat-num">1000+</div><div class="stat-label">Szerződő ügyfél</div></div>
+        <div class="stat-item"><div class="stat-num">20 000+</div><div class="stat-label">Könyvelt cég</div></div>
+        <div class="stat-item"><div class="stat-num">7500+</div><div class="stat-label">Felhasználó</div></div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--gray-500);margin-top:8px;">Animated counter: IntersectionObserver + <code>data-target</code> attribútum, JS requestAnimationFrame.</p>
+  </section>
+
+  <!-- ═══════════════ CTA ═══════════════ -->
+  <section class="db-section" id="cta">
+    <h2 class="db-section-title">CTA sáv</h2>
+    <div class="cta-bar-demo">
+      <h2>Készen áll a váltásra?</h2>
+      <p>Kérjen személyre szabott ajánlatot szakértőinktől.</p>
+      <a href="#" class="btn-white">Ajánlatot kérek →</a>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <section class="db-section" id="footer-section">
+    <h2 class="db-section-title">Footer</h2>
+    <p class="db-section-sub">3 oszlopos grid (2fr 1fr 1fr), 1023px alatt 2 oszlopos, 767px alatt 1 oszlopos. Háttér: <code>--dark (#0f172a)</code>.</p>
+    <div class="footer-demo">
+      <div>
+        <div><span class="footer-demo-logo-q">Q</span><span class="footer-demo-logo-soft">soft</span></div>
+        <p>Ügyviteli számviteli programcsomagok hazai vállalkozásoknak 1993 óta.</p>
+      </div>
+      <div>
+        <h5>Szoftverek</h5>
+        <ul>
+          <li><a href="#">SUP Vállalatirányítás</a></li>
+          <li><a href="#">TIP Iratkezelő</a></li>
+          <li><a href="#">Online Lekérdezések</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Szolgáltatások</h5>
+        <ul>
+          <li><a href="#">Támogatás</a></li>
+          <li><a href="#">Vásárlás</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CSS TOKENS ═══════════════ -->
+  <section class="db-section" id="tokens-css">
+    <h2 class="db-section-title">CSS tokenek — másolható kód</h2>
+    <p class="db-section-sub">Minden HTML fájl inline <code>&lt;style&gt;</code> blokkjának elején szerepel ez a <code>:root</code> definíció.</p>
+
+    <div class="code">
+<span class="comment">/* Fonts */</span>
+<span class="kw">@font-face</span>{<span class="prop">font-family</span>:<span class="str">'Planer'</span>;<span class="prop">src</span>:<span class="val">url('fonts/Planer-Regular.woff2') format('woff2')</span>;<span class="prop">font-weight</span>:<span class="val">400</span>;<span class="prop">font-display</span>:<span class="val">swap</span>;}
+<span class="kw">@font-face</span>{<span class="prop">font-family</span>:<span class="str">'Planer'</span>;<span class="prop">src</span>:<span class="val">url('fonts/Planer-DemiBold.woff2') format('woff2')</span>;<span class="prop">font-weight</span>:<span class="val">600</span>;<span class="prop">font-display</span>:<span class="val">swap</span>;}
+
+<span class="comment">/* Design tokens */</span>
+<span class="kw">:root</span>{
+  <span class="prop">--blue</span>:<span class="val">#1e3184</span>;  <span class="prop">--blue-dark</span>:<span class="val">#162560</span>;  <span class="prop">--blue-light</span>:<span class="val">#e8ecf7</span>;
+  <span class="prop">--gray-50</span>:<span class="val">#f9fafb</span>;  <span class="prop">--gray-100</span>:<span class="val">#f3f4f6</span>;  <span class="prop">--gray-200</span>:<span class="val">#e5e7eb</span>;
+  <span class="prop">--gray-500</span>:<span class="val">#6b7280</span>;  <span class="prop">--gray-600</span>:<span class="val">#6e7681</span>;  <span class="prop">--gray-700</span>:<span class="val">#374151</span>;
+  <span class="prop">--gray-900</span>:<span class="val">#111827</span>;  <span class="prop">--dark</span>:<span class="val">#0f172a</span>;
+  <span class="prop">--radius</span>:<span class="val">12px</span>;
+  <span class="prop">--shadow-sm</span>:<span class="val">0 1px 3px rgba(0,0,0,.08)</span>;
+  <span class="prop">--shadow-md</span>:<span class="val">0 4px 16px rgba(0,0,0,.10)</span>;
+  <span class="prop">--shadow-lg</span>:<span class="val">0 10px 40px rgba(0,0,0,.14)</span>;
+  <span class="prop">--transition</span>:<span class="val">0.25s ease</span>;
+}
+    </div>
+  </section>
+
+  <!-- ═══════════════ PAGE TEMPLATES ═══════════════ -->
+  <section class="db-section" id="page-templates">
+    <h2 class="db-section-title">Oldal sablonok</h2>
+
+    <div class="db-subsection">
+      <div class="db-subsection-title">Modul oldal (pl. szamviteli-modul.html)</div>
+      <div class="preview gray" style="font-size:13px;font-family:monospace;color:var(--gray-700);line-height:2;">
+        [Header — fixed, 64px]<br>
+        [Page Hero — breadcrumb + H1 + alcím, gradient háttér, kék border-bottom]<br>
+        [Hero kép — full-width, border-radius, shadow]<br>
+        [Feature cols — 2 oszlopos grid: feature-box-ok checkmark listával]<br>
+        [Screenshot grid — 3 oszlopos, lightbox-szal]<br>
+        [CTA bar — kék háttér, 2 gomb]<br>
+        [Footer — dark, 3 oszlopos]
+      </div>
+    </div>
+
+    <div class="db-subsection">
+      <div class="db-subsection-title">Aktualitás cikk oldal</div>
+      <div class="preview gray" style="font-size:13px;font-family:monospace;color:var(--gray-700);line-height:2;">
+        [Header]<br>
+        [Article hero bar — breadcrumb + ← Vissza gomb]<br>
+        [Hero kép — fullwidth, max-height: 420px, object-fit: cover] (ha van)<br>
+        [Article body — max-width: 800px, centered]<br>
+          &nbsp;&nbsp;Kategória badge + H1 + dátum (ha van)<br>
+          &nbsp;&nbsp;Cikkszöveg bekezdések (eredeti szöveg)<br>
+          &nbsp;&nbsp;Inline kép — float: right, 380px (ha kisebb kép)<br>
+        [Kontakt CTA sáv] (ha ügyfélszolgálatot említ)<br>
+        [CTA bar — kék, gombok]<br>
+        [Footer]
+      </div>
+    </div>
+
+    <div class="db-subsection">
+      <div class="db-subsection-title">Aktualitások lista oldal (aktualitasaink.html)</div>
+      <div class="preview gray" style="font-size:13px;font-family:monospace;color:var(--gray-700);line-height:2;">
+        [Header]<br>
+        [Page Hero — cím: "Aktualitásaink"]<br>
+        [Kártya rács — 3 oszlopos (767px alatt 1 oszlopos)]<br>
+          &nbsp;&nbsp;Kártya: kép / placeholder + badge + dátum + H3 + kivonat + link<br>
+        [Footer]
+      </div>
+    </div>
+
+    <div class="db-subsection">
+      <div class="db-subsection-title">Támogatás / szolgáltatás oldal (tamogatas.html)</div>
+      <div class="preview gray" style="font-size:13px;font-family:monospace;color:var(--gray-700);line-height:2;">
+        [Header]<br>
+        [Page Hero — cím + alcím, hero kép fullwidth alul]<br>
+        [Áttekintő kártyák — 3 oszlopos, anchor linkekkel]<br>
+        [Részletes szekciók — max-width: 860px, id anchor-ok]<br>
+          &nbsp;&nbsp;Szekciónként: H2 + szöveg + kép (float right, 360px) clearfix<br>
+        [CTA bar + kontakt strip]<br>
+        [Footer]
+      </div>
+    </div>
+
+    <div class="db-subsection">
+      <div class="db-subsection-title">Fájl struktúra</div>
+      <div class="code">
+<span class="comment">/ (gyökér)</span>
+├── index.html              <span class="comment">Főoldal</span>
+├── sup-integralt.html      <span class="comment">Termék főoldalak</span>
+├── szamviteli-modul.html   <span class="comment">Modul oldalak</span>
+├── tamogatas.html          <span class="comment">Szolgáltatás oldalak</span>
+├── ajanlatkeres.html
+├── designbook.html         <span class="comment">← Ez a fájl</span>
+├── aktualitasok/           <span class="comment">Hír aloldalak</span>
+│   ├── aktualitasaink.html
+│   ├── majusi-rendszervaltas.html
+│   └── ...
+├── pages/                  <span class="comment">Forrástartalom (nem deployolt)</span>
+│   ├── 17_tamogatas/
+│   │   ├── content.md
+│   │   └── images/
+│   └── ...
+└── fonts/                  <span class="comment">Planer WOFF2 fájlok</span>
+      </div>
+    </div>
+  </section>
+
+  <div style="text-align:center;padding:48px 0;color:var(--gray-500);font-size:13px;border-top:1px solid var(--gray-200);">
+    Qsoft Design Book v1.0 · 2026 · Statikus HTML design system
+  </div>
+
+</main>
+
+<script>
+  // Sidebar active state
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.db-nav-group a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`.db-nav-group a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
