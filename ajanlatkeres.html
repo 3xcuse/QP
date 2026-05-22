@@ -1,0 +1,867 @@
+﻿<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajánlatkérés – Qsoft Kft.</title>
+  <meta name="description" content="Kérjen személyre szabott ajánlatot a Qsoft ERP/számviteli rendszerhez. Néhány kérdés, és szakértőink felkészülten keresik meg Önt.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="hu_HU">
+  <meta property="og:site_name" content="Qsoft Kft.">
+  <meta property="og:url" content="https://qsoft.hu/ajanlatkeres.html">
+  <meta property="og:title" content="Ajánlatkérés – Qsoft Kft.">
+  <meta property="og:description" content="Kérjen személyre szabott ajánlatot a Qsoft ERP/számviteli rendszerhez.">
+  <link rel="canonical" href="https://qsoft.hu/ajanlatkeres.html">
+  <style>
+    @font-face{font-family:'Planer';src:url('fonts/Planer-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+    @font-face{font-family:'Planer';src:url('fonts/Planer-DemiBold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap;}
+
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Planer',system-ui,-apple-system,sans-serif;color:#111827;background:#fff;line-height:1.6;overflow-x:hidden;}
+    img{display:block;max-width:100%;}
+    a{text-decoration:none;}
+
+    :root{
+      --blue:#1e3184;--blue-dark:#162560;--blue-light:#e8ecf7;
+      --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;
+      --gray-400:#9ca3af;--gray-500:#6b7280;--gray-600:#6e7681;
+      --gray-700:#374151;--gray-900:#111827;--dark:#0f172a;
+      --radius:12px;--shadow-sm:0 1px 3px rgba(0,0,0,.08);
+      --shadow-md:0 4px 16px rgba(0,0,0,.10);--shadow-lg:0 10px 40px rgba(0,0,0,.14);
+      --transition:0.25s ease;
+    }
+
+    /* ── Header ── */
+    header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--gray-200);transition:box-shadow var(--transition);}
+    header.scrolled{box-shadow:var(--shadow-md);}
+    .header-inner{max-width:1200px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+    .logo{display:inline-flex;align-items:baseline;text-decoration:none;user-select:none;}
+    .logo-q{font-size:26px;font-weight:600;color:var(--blue);letter-spacing:-0.03em;}
+    .logo-soft{font-size:26px;font-weight:400;color:var(--gray-600);letter-spacing:-0.03em;}
+    .nav-desktop{display:flex;align-items:center;gap:6px;}
+    .nav-desktop>a,.nav-item>a{font-size:14px;font-weight:500;color:var(--gray-700);padding:8px 14px;border-radius:8px;transition:color var(--transition),background var(--transition);white-space:nowrap;}
+    .nav-desktop>a:hover,.nav-item>a:hover{color:var(--blue);background:var(--blue-light);}
+    .nav-item{position:relative;}.nav-item>a{display:flex;align-items:center;gap:4px;cursor:pointer;}
+    .nav-item>a::after{content:'';width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;transition:transform var(--transition);}
+    .nav-item.open>a::after{transform:rotate(180deg);}
+    .dropdown{position:absolute;top:calc(100% + 8px);left:0;background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);box-shadow:var(--shadow-lg);min-width:240px;padding:8px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity var(--transition),transform var(--transition),visibility var(--transition);}
+    .nav-item.open .dropdown,.nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+    .dropdown a{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--gray-700);padding:10px 12px;border-radius:8px;transition:background var(--transition),color var(--transition);}
+    .dropdown a:hover{background:var(--blue-light);color:var(--blue);}.dropdown a .dd-icon{font-size:16px;width:22px;text-align:center;}
+    .dropdown-divider{height:1px;background:var(--gray-200);margin:6px 0;}
+    .btn-header{font-size:14px;font-weight:600;color:#fff;background:var(--blue);padding:9px 20px;border-radius:8px;transition:background var(--transition);}
+    .btn-header:hover{background:var(--blue-dark);}
+    .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--gray-700);border-radius:2px;transition:transform 0.3s,opacity 0.3s;}
+    .hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.active span:nth-child(2){opacity:0;}
+    .hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .nav-mobile{display:none;flex-direction:column;background:#fff;border-top:1px solid var(--gray-200);padding:16px 24px 24px;}
+    .nav-mobile.open{display:flex;}
+    .nav-mobile a{font-size:15px;font-weight:500;color:var(--gray-700);padding:10px 0;border-bottom:1px solid var(--gray-100);}
+    .nav-mobile a:hover{color:var(--blue);}.nav-mobile .mob-sub{padding-left:16px;font-size:14px;color:var(--gray-500);}
+    .nav-mobile .btn-mobile{margin-top:16px;text-align:center;background:var(--blue);color:#fff;border-radius:8px;padding:12px;font-weight:600;}
+    .nav-desktop > a.nav-active{color:var(--blue);background:var(--blue-light);font-weight:600;}
+    .nav-item.nav-active-parent > a{color:var(--blue)!important;background:var(--blue-light)!important;}
+
+    /* ── Progress bar ── */
+    .form-progress-wrap{
+      position:fixed;top:64px;left:0;right:0;z-index:900;
+      background:#fff;border-bottom:1px solid var(--gray-100);
+      padding:10px 32px;display:flex;align-items:center;gap:16px;
+    }
+    .form-progress-bar{
+      flex:1;height:4px;background:var(--gray-200);border-radius:4px;overflow:hidden;
+    }
+    .form-progress-fill{
+      height:100%;background:var(--blue);border-radius:4px;
+      transition:width 0.4s ease;width:0%;
+    }
+    .form-progress-label{
+      font-size:13px;color:var(--gray-500);white-space:nowrap;
+    }
+
+    /* ── Form shell ── */
+    .form-shell{
+      min-height:100vh;padding-top:128px;padding-bottom:80px;
+      background:linear-gradient(160deg,#fff 60%,var(--blue-light));
+    }
+    .form-container{max-width:680px;margin:0 auto;padding:0 32px;}
+
+    /* ── Steps ── */
+    .form-step{
+      display:none;
+      animation:stepIn 0.35s ease forwards;
+    }
+    .form-step.active{display:block;}
+    @keyframes stepIn{
+      from{opacity:0;transform:translateY(28px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+
+    .step-num{
+      display:inline-flex;align-items:center;gap:6px;
+      font-size:13px;font-weight:600;color:var(--blue);
+      background:var(--blue-light);padding:4px 12px;border-radius:100px;
+      margin-bottom:20px;letter-spacing:0.02em;
+    }
+    .step-q{
+      font-size:clamp(22px,3.5vw,30px);font-weight:600;
+      color:var(--gray-900);letter-spacing:-0.02em;line-height:1.3;
+      margin-bottom:8px;
+    }
+    .step-hint{
+      font-size:15px;color:var(--gray-500);margin-bottom:32px;line-height:1.6;
+    }
+
+    /* ── Option cards ── */
+    .options-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:32px;}
+    .option-card{
+      display:flex;align-items:center;gap:16px;
+      padding:16px 20px;border:2px solid var(--gray-200);
+      border-radius:var(--radius);background:#fff;cursor:pointer;
+      transition:border-color var(--transition),background var(--transition),transform var(--transition);
+      user-select:none;
+    }
+    .option-card:hover{border-color:var(--blue);background:var(--blue-light);}
+    .option-card.selected{border-color:var(--blue);background:var(--blue-light);}
+    .option-key{
+      width:28px;height:28px;border-radius:6px;border:1.5px solid var(--gray-300);
+      display:flex;align-items:center;justify-content:center;
+      font-size:12px;font-weight:600;color:var(--gray-500);flex-shrink:0;
+      transition:background var(--transition),border-color var(--transition),color var(--transition);
+    }
+    .option-card.selected .option-key,
+    .option-card:hover .option-key{background:var(--blue);border-color:var(--blue);color:#fff;}
+    .option-icon{font-size:20px;flex-shrink:0;}
+    .option-label{font-size:16px;font-weight:500;color:var(--gray-900);}
+    .option-desc{font-size:13px;color:var(--gray-500);margin-top:2px;}
+
+    /* ── Other input ── */
+    .other-input-wrap{
+      display:none;margin-top:12px;
+    }
+    .other-input-wrap.visible{display:block;}
+    .other-input{
+      width:100%;padding:14px 16px;border:2px solid var(--blue);
+      border-radius:var(--radius);font-family:inherit;font-size:15px;
+      color:var(--gray-900);background:#fff;outline:none;
+      transition:box-shadow var(--transition);
+    }
+    .other-input:focus{box-shadow:0 0 0 3px rgba(30,49,132,.15);}
+
+    /* ── Contact fields ── */
+    .contact-fields{display:flex;flex-direction:column;gap:16px;margin-bottom:32px;}
+    .field-group{display:flex;flex-direction:column;gap:6px;}
+    .field-label{font-size:14px;font-weight:600;color:var(--gray-700);}
+    .field-input{
+      padding:14px 16px;border:2px solid var(--gray-200);
+      border-radius:var(--radius);font-family:inherit;font-size:15px;
+      color:var(--gray-900);background:#fff;outline:none;
+      transition:border-color var(--transition),box-shadow var(--transition);
+    }
+    .field-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(30,49,132,.12);}
+    .field-input.error{border-color:#dc2626;}
+    .field-error{font-size:13px;color:#dc2626;display:none;}
+    .field-error.visible{display:block;}
+
+    /* ── Textarea ── */
+    textarea.field-input{resize:vertical;min-height:100px;}
+
+    /* ── Buttons ── */
+    .step-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+    .btn-next{
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--blue);color:#fff;
+      font-family:inherit;font-size:15px;font-weight:600;
+      padding:14px 28px;border-radius:10px;border:none;cursor:pointer;
+      transition:background var(--transition),transform var(--transition);
+    }
+    .btn-next:hover{background:var(--blue-dark);transform:translateY(-1px);}
+    .btn-next:disabled{background:var(--gray-400);cursor:not-allowed;transform:none;}
+    .btn-back{
+      background:none;border:none;cursor:pointer;
+      font-family:inherit;font-size:14px;color:var(--gray-500);
+      padding:8px;border-radius:8px;
+      transition:color var(--transition),background var(--transition);
+    }
+    .btn-back:hover{color:var(--gray-900);background:var(--gray-100);}
+    .press-enter{font-size:13px;color:var(--gray-400);}
+    .press-enter kbd{
+      display:inline-flex;align-items:center;padding:2px 6px;
+      border:1px solid var(--gray-300);border-radius:4px;font-size:11px;
+      background:var(--gray-50);color:var(--gray-600);
+    }
+
+    /* ── Thank you screen ── */
+    .thankyou-screen{
+      display:none;text-align:center;padding:48px 0;
+    }
+    .thankyou-screen.active{display:block;animation:stepIn 0.4s ease forwards;}
+    .thankyou-icon{font-size:64px;margin-bottom:24px;}
+    .thankyou-title{font-size:32px;font-weight:600;color:var(--gray-900);letter-spacing:-0.02em;margin-bottom:12px;}
+    .thankyou-sub{font-size:17px;color:var(--gray-500);line-height:1.7;max-width:480px;margin:0 auto 32px;}
+    .thankyou-actions{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;}
+    .btn-outline{
+      display:inline-flex;align-items:center;gap:8px;
+      border:2px solid var(--blue);color:var(--blue);
+      font-family:inherit;font-size:15px;font-weight:600;
+      padding:13px 28px;border-radius:10px;
+      transition:background var(--transition),color var(--transition);
+    }
+    .btn-outline:hover{background:var(--blue);color:#fff;}
+
+    /* ── Footer ── */
+    footer{background:var(--dark);color:rgba(255,255,255,.65);}
+    .footer-top{padding:64px 0 48px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;border-bottom:1px solid rgba(255,255,255,.08);}
+    .footer-logo{display:flex;align-items:baseline;margin-bottom:16px;}
+    .footer-logo .logo-q{color:#fff;font-size:22px;font-weight:600;}
+    .footer-logo .logo-soft{color:rgba(255,255,255,.5);font-size:22px;}
+    .footer-desc{font-size:14px;line-height:1.75;max-width:300px;}
+    .footer-col h5{font-size:13px;font-weight:600;color:#fff;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:20px;}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+    .footer-col ul a{font-size:14px;color:rgba(255,255,255,.55);transition:color var(--transition);}
+    .footer-col ul a:hover{color:#fff;}
+    .footer-contact-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.6;margin-bottom:12px;}
+    .footer-contact-item .fc-icon{font-size:15px;flex-shrink:0;margin-top:2px;}
+    .footer-bottom{padding:24px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;max-width:1200px;margin:0 auto;padding-left:32px;padding-right:32px;}
+    .footer-copy{font-size:13px;}
+    .footer-links{display:flex;gap:24px;}
+    .footer-links a{font-size:13px;color:rgba(255,255,255,.4);transition:color var(--transition);}
+    .footer-links a:hover{color:rgba(255,255,255,.8);}
+    .container{max-width:1200px;margin:0 auto;padding:0 32px;}
+
+    /* ── Responsive ── */
+    @media(max-width:767px){
+      .container{padding:0 20px;}
+      .form-container{padding:0 20px;}
+      .nav-desktop{display:none;}.btn-header{display:none;}.hamburger{display:flex;}
+      .footer-top{grid-template-columns:1fr;}
+      .form-progress-wrap{padding:10px 20px;}
+      .thankyou-actions{flex-direction:column;align-items:center;}
+    }
+    @media(max-width:1023px){
+      .footer-top{grid-template-columns:1fr 1fr;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header id="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo"><span class="logo-q">Q</span><span class="logo-soft">soft</span></a>
+    <nav class="nav-desktop">
+      <div class="nav-item" id="nav-szoftverek">
+        <a href="#">Szoftverek</a>
+        <div class="dropdown">
+          <a href="sup-integralt.html"><span class="dd-icon">🏢</span>SUP Vállalatirányítási Rendszer</a>
+          <a href="tip-iratkezelo.html"><span class="dd-icon">📁</span>TIP Iratkezelő Rendszer</a>
+          <a href="online-informacios-lekerdezesek.html"><span class="dd-icon">🌐</span>Online Információs Lekérdezések</a>
+          <div class="dropdown-divider"></div>
+          <a href="sup-integralt.html#modulok"><span class="dd-icon">🧩</span>Összes modul</a>
+          <a href="excel-fugvenycsomag.html"><span class="dd-icon">📊</span>Excel függvénycsomag</a>
+          <a href="referencia-lista.html"><span class="dd-icon">✅</span>Referencia lista</a>
+        </div>
+      </div>
+      <a href="sup-integralt.html#modulok">Modulok</a>
+      <div class="nav-item" id="nav-szolgaltatasok">
+        <a href="#">Szolgáltatások</a>
+        <div class="dropdown">
+          <a href="vasarlas-es-rendszerbevezetes.html"><span class="dd-icon">🛒</span>Vásárlás és rendszerbevezetés</a>
+        </div>
+      </div>
+      <a href="index.html#kapcsolat">Kapcsolat</a>
+    </nav>
+    <a href="ajanlatkeres.html" class="btn-header nav-active" style="pointer-events:none;">Ajánlatot kérek</a>
+    <button class="hamburger" id="hamburger" aria-label="Menü"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="nav-mobile" id="nav-mobile">
+    <a href="sup-integralt.html">SUP Vállalatirányítási Rendszer</a>
+    <a href="tip-iratkezelo.html" class="mob-sub">TIP Iratkezelő</a>
+    <a href="online-informacios-lekerdezesek.html" class="mob-sub">Online Lekérdezések</a>
+    <a href="sup-integralt.html#modulok">Modulok</a>
+    <a href="vasarlas-es-rendszerbevezetes.html" class="mob-sub">Vásárlás és rendszerbevezetés</a>
+    <a href="index.html#kapcsolat">Kapcsolat</a>
+    <a href="ajanlatkeres.html" class="btn-mobile">Ajánlatot kérek →</a>
+  </nav>
+</header>
+
+<!-- ── Progress bar ── -->
+<div class="form-progress-wrap" id="progress-wrap">
+  <div class="form-progress-bar">
+    <div class="form-progress-fill" id="progress-fill"></div>
+  </div>
+  <span class="form-progress-label" id="progress-label">1 / 8</span>
+</div>
+
+<!-- ── Form shell ── -->
+<section class="form-shell">
+  <div class="form-container">
+
+    <!-- Step 1: Cég mérete -->
+    <div class="form-step active" data-step="1">
+      <div class="step-num">1 → Cég mérete</div>
+      <h2 class="step-q">Hány főt foglalkoztat a cége?</h2>
+      <p class="step-hint">Ez segít megfelelően méretezett ajánlatot összeállítani.</p>
+      <div class="options-grid">
+        <div class="option-card" data-value="1-10">
+          <span class="option-key">A</span>
+          <span class="option-icon">👤</span>
+          <div><div class="option-label">1–10 fő</div><div class="option-desc">Mikrovállalkozás, egyéni vállalkozó</div></div>
+        </div>
+        <div class="option-card" data-value="11-50">
+          <span class="option-key">B</span>
+          <span class="option-icon">👥</span>
+          <div><div class="option-label">11–50 fő</div><div class="option-desc">Kisvállalkozás</div></div>
+        </div>
+        <div class="option-card" data-value="51-200">
+          <span class="option-key">C</span>
+          <span class="option-icon">🏢</span>
+          <div><div class="option-label">51–200 fő</div><div class="option-desc">Közepes méretű vállalkozás</div></div>
+        </div>
+        <div class="option-card" data-value="200+">
+          <span class="option-key">D</span>
+          <span class="option-icon">🏭</span>
+          <div><div class="option-label">200 fő felett</div><div class="option-desc">Nagyvállalat</div></div>
+        </div>
+        <div class="option-card" data-value="egyeb-1">
+          <span class="option-key">E</span>
+          <span class="option-icon">✏️</span>
+          <div><div class="option-label">Egyéb / Nem tudja pontosan</div></div>
+        </div>
+      </div>
+      <div class="other-input-wrap" id="other-wrap-1">
+        <input type="text" class="other-input" placeholder="Adja meg a létszámot vagy egyéb megjegyzését…" id="other-input-1">
+      </div>
+      <div class="step-actions">
+        <button class="btn-next" id="btn-1" disabled>Tovább <span>→</span></button>
+        <span class="press-enter">vagy nyomjon <kbd>Enter ↵</kbd></span>
+      </div>
+    </div>
+
+    <!-- Step 2: Iparág -->
+    <div class="form-step" data-step="2">
+      <div class="step-num">2 → Iparág</div>
+      <h2 class="step-q">Melyik iparágban tevékenykedik a cége?</h2>
+      <p class="step-hint">A különböző szektoroknak eltérő számviteli és ügyviteli igényei vannak.</p>
+      <div class="options-grid">
+        <div class="option-card" data-value="kereskedelem">
+          <span class="option-key">A</span>
+          <span class="option-icon">🛒</span>
+          <div><div class="option-label">Kereskedelem</div><div class="option-desc">Nagy- és kiskereskedelem, import-export</div></div>
+        </div>
+        <div class="option-card" data-value="gyartas">
+          <span class="option-key">B</span>
+          <span class="option-icon">⚙️</span>
+          <div><div class="option-label">Gyártás / termelés</div><div class="option-desc">Ipari termelés, feldolgozóipar</div></div>
+        </div>
+        <div class="option-card" data-value="szolgaltatas">
+          <span class="option-key">C</span>
+          <span class="option-icon">💼</span>
+          <div><div class="option-label">Szolgáltatás</div><div class="option-desc">Szakmai, pénzügyi, IT-szolgáltatások</div></div>
+        </div>
+        <div class="option-card" data-value="epites">
+          <span class="option-key">D</span>
+          <span class="option-icon">🏗️</span>
+          <div><div class="option-label">Építőipar</div><div class="option-desc">Kivitelezés, tervezés, ingatlan</div></div>
+        </div>
+        <div class="option-card" data-value="egyeb-2">
+          <span class="option-key">E</span>
+          <span class="option-icon">✏️</span>
+          <div><div class="option-label">Egyéb iparág</div></div>
+        </div>
+      </div>
+      <div class="other-input-wrap" id="other-wrap-2">
+        <input type="text" class="other-input" placeholder="Pl. egészségügy, közigazgatás, mezőgazdaság…" id="other-input-2">
+      </div>
+      <div class="step-actions">
+        <button class="btn-next" id="btn-2" disabled>Tovább <span>→</span></button>
+        <button class="btn-back" data-target="1">← Vissza</button>
+        <span class="press-enter">vagy nyomjon <kbd>Enter ↵</kbd></span>
+      </div>
+    </div>
+
+    <!-- Step 3: Jelenlegi rendszer -->
+    <div class="form-step" data-step="3">
+      <div class="step-num">3 → Jelenlegi helyzet</div>
+      <h2 class="step-q">Milyen rendszert használ jelenleg?</h2>
+      <p class="step-hint">Tudni szeretnénk, honnan indul, hogy az átállást a legjobban tervezzük meg.</p>
+      <div class="options-grid">
+        <div class="option-card" data-value="excel">
+          <span class="option-key">A</span>
+          <span class="option-icon">📊</span>
+          <div><div class="option-label">Nincs rendszer / Excel</div><div class="option-desc">Kézi nyilvántartás vagy táblázatkezelő</div></div>
+        </div>
+        <div class="option-card" data-value="egyedi">
+          <span class="option-key">B</span>
+          <span class="option-icon">🛠️</span>
+          <div><div class="option-label">Egyedi fejlesztésű szoftver</div><div class="option-desc">Saját vagy régi, egyedi program</div></div>
+        </div>
+        <div class="option-card" data-value="mas-erp">
+          <span class="option-key">C</span>
+          <span class="option-icon">🔄</span>
+          <div><div class="option-label">Más ERP / számviteli rendszer</div><div class="option-desc">Pl. SAP, Oracle, Sage, Cobos, Kulcs-Soft</div></div>
+        </div>
+        <div class="option-card" data-value="qsoft-regi">
+          <span class="option-key">D</span>
+          <span class="option-icon">⬆️</span>
+          <div><div class="option-label">Régebbi Qsoft termék</div><div class="option-desc">Frissítés, verzióváltás</div></div>
+        </div>
+        <div class="option-card" data-value="egyeb-3">
+          <span class="option-key">E</span>
+          <span class="option-icon">✏️</span>
+          <div><div class="option-label">Egyéb</div></div>
+        </div>
+      </div>
+      <div class="other-input-wrap" id="other-wrap-3">
+        <input type="text" class="other-input" placeholder="Írja le röviden jelenlegi helyzetét…" id="other-input-3">
+      </div>
+      <div class="step-actions">
+        <button class="btn-next" id="btn-3" disabled>Tovább <span>→</span></button>
+        <button class="btn-back" data-target="2">← Vissza</button>
+        <span class="press-enter">vagy nyomjon <kbd>Enter ↵</kbd></span>
+      </div>
+    </div>
+
+    <!-- Step 4: Igényelt területek -->
+    <div class="form-step" data-step="4">
+      <div class="step-num">4 → Igényelt területek</div>
+      <h2 class="step-q">Melyik területre keres elsősorban megoldást?</h2>
+      <p class="step-hint">A legfontosabb igényt jelölje meg — részletesen a konzultáción egyeztetünk.</p>
+      <div class="options-grid">
+        <div class="option-card" data-value="teljes-erp">
+          <span class="option-key">A</span>
+          <span class="option-icon">🏗️</span>
+          <div><div class="option-label">Teljes ERP csomag</div><div class="option-desc">Integrált vállalatirányítás</div></div>
+        </div>
+        <div class="option-card" data-value="szamvitel">
+          <span class="option-key">B</span>
+          <span class="option-icon">📒</span>
+          <div><div class="option-label">Számvitel és pénzügy</div><div class="option-desc">Főkönyv, mérleg, analitika</div></div>
+        </div>
+        <div class="option-card" data-value="szamlazas">
+          <span class="option-key">C</span>
+          <span class="option-icon">🧾</span>
+          <div><div class="option-label">Számlázás és értékesítés</div><div class="option-desc">Kimenő számlák, vevőkezelés</div></div>
+        </div>
+        <div class="option-card" data-value="raktar">
+          <span class="option-key">D</span>
+          <span class="option-icon">📦</span>
+          <div><div class="option-label">Raktár és készletkezelés</div><div class="option-desc">Készletmozgások, leltár</div></div>
+        </div>
+        <div class="option-card" data-value="egyeb-4">
+          <span class="option-key">E</span>
+          <span class="option-icon">✏️</span>
+          <div><div class="option-label">Egyéb / Nem tudom pontosan</div></div>
+        </div>
+      </div>
+      <div class="other-input-wrap" id="other-wrap-4">
+        <input type="text" class="other-input" placeholder="Pl. tárgyi eszköz, bér, iratkezelés, online lekérdezés…" id="other-input-4">
+      </div>
+      <div class="step-actions">
+        <button class="btn-next" id="btn-4" disabled>Tovább <span>→</span></button>
+        <button class="btn-back" data-target="3">← Vissza</button>
+        <span class="press-enter">vagy nyomjon <kbd>Enter ↵</kbd></span>
+      </div>
+    </div>
+
+    <!-- Step 5: Felhasználók száma -->
+    <div class="form-step" data-step="5">
+      <div class="step-num">5 → Felhasználók</div>
+      <h2 class="step-q">Hány felhasználó dolgozna a rendszerben?</h2>
+      <p class="step-hint">A licencdíj és az ajánlat összeállításához szükséges adat.</p>
+      <div class="options-grid">
+        <div class="option-card" data-value="1-3">
+          <span class="option-key">A</span>
+          <span class="option-icon">👤</span>
+          <div><div class="option-label">1–3 felhasználó</div></div>
+        </div>
+        <div class="option-card" data-value="4-10">
+          <span class="option-key">B</span>
+          <span class="option-icon">👥</span>
+          <div><div class="option-label">4–10 felhasználó</div></div>
+        </div>
+        <div class="option-card" data-value="11-25">
+          <span class="option-key">C</span>
+          <span class="option-icon">🏢</span>
+          <div><div class="option-label">11–25 felhasználó</div></div>
+        </div>
+        <div class="option-card" data-value="25+">
+          <span class="option-key">D</span>
+          <span class="option-icon">🏭</span>
+          <div><div class="option-label">25 felhasználó felett</div></div>
+        </div>
+        <div class="option-card" data-value="egyeb-5">
+          <span class="option-key">E</span>
+          <span class="option-icon">✏️</span>
+          <div><div class="option-label">Még nem tudom pontosan</div></div>
+        </div>
+      </div>
+      <div class="other-input-wrap" id="other-wrap-5">
+        <input type="text" class="other-input" placeholder="Adja meg a várható felhasználószámot…" id="other-input-5">
+      </div>
+      <div class="step-actions">
+        <button class="btn-next" id="btn-5" disabled>Tovább <span>→</span></button>
+        <button class="btn-back" data-target="4">← Vissza</button>
+        <span class="press-enter">vagy nyomjon <kbd>Enter ↵</kbd></span>
+      </div>
+    </div>
+
+    <!-- Step 6: Bevezetési mód -->
+    <div class="form-step" data-step="6">
+      <div class="step-num">6 → Konstrukció</div>
+      <h2 class="step-q">Hogyan szeretné igénybe venni a rendszert?</h2>
+      <p class="step-hint">Mindkét konstrukcióhoz részletes, összehasonlító ajánlatot tudunk készíteni.</p>
+      <div class="options-grid">
+        <div class="option-card" data-value="vasarlas">
+          <span class="option-key">A</span>
+          <span class="option-icon">💳</span>
+          <div><div class="option-label">Vásárlás</div><div class="option-desc">Egyszeri licencdíj, hosszú távú tulajdon</div></div>
+        </div>
+        <div class="option-card" data-value="berlet">
+          <span class="option-key">B</span>
+          <span class="option-icon">📅</span>
+          <div><div class="option-label">Bérlet / előfizetés</div><div class="option-desc">Havi/éves díj, alacsonyabb belépési küszöb</div></div>
+        </div>
+        <div class="option-card" data-value="mindketto">
+          <span class="option-key">C</span>
+          <span class="option-icon">⚖️</span>
+          <div><div class="option-label">Mindkettőt megvizsgálnám</div><div class="option-desc">Összehasonlító ajánlatot kérek</div></div>
+        </div>
+        <div class="option-card" data-value="egyeb-6">
+          <span class="option-key">D</span>
+          <span class="option-icon">✏️</span>
+          <div><div class="option-label">Még nem döntöttem</div></div>
+        </div>
+      </div>
+      <div class="other-input-wrap" id="other-wrap-6">
+        <input type="text" class="other-input" placeholder="Megjegyzés a konstrukcióval kapcsolatban…" id="other-input-6">
+      </div>
+      <div class="step-actions">
+        <button class="btn-next" id="btn-6" disabled>Tovább <span>→</span></button>
+        <button class="btn-back" data-target="5">← Vissza</button>
+        <span class="press-enter">vagy nyomjon <kbd>Enter ↵</kbd></span>
+      </div>
+    </div>
+
+    <!-- Step 7: Döntési időszak -->
+    <div class="form-step" data-step="7">
+      <div class="step-num">7 → Időkeret</div>
+      <h2 class="step-q">Mikor tervezi a rendszerváltást / bevezetést?</h2>
+      <p class="step-hint">Segít priorizálni, hogy mikor érdemes egyeztetni.</p>
+      <div class="options-grid">
+        <div class="option-card" data-value="1-honapon-belul">
+          <span class="option-key">A</span>
+          <span class="option-icon">🚀</span>
+          <div><div class="option-label">1 hónapon belül</div><div class="option-desc">Sürgős, mielőbb kellene</div></div>
+        </div>
+        <div class="option-card" data-value="1-3-honap">
+          <span class="option-key">B</span>
+          <span class="option-icon">📆</span>
+          <div><div class="option-label">1–3 hónapon belül</div></div>
+        </div>
+        <div class="option-card" data-value="3-6-honap">
+          <span class="option-key">C</span>
+          <span class="option-icon">🗓️</span>
+          <div><div class="option-label">3–6 hónapon belül</div></div>
+        </div>
+        <div class="option-card" data-value="tajekozo">
+          <span class="option-key">D</span>
+          <span class="option-icon">🔍</span>
+          <div><div class="option-label">Még csak tájékozódom</div><div class="option-desc">Nincs konkrét határidő</div></div>
+        </div>
+        <div class="option-card" data-value="egyeb-7">
+          <span class="option-key">E</span>
+          <span class="option-icon">✏️</span>
+          <div><div class="option-label">Egyéb</div></div>
+        </div>
+      </div>
+      <div class="other-input-wrap" id="other-wrap-7">
+        <input type="text" class="other-input" placeholder="Adja meg a tervezett időpontot vagy megjegyzést…" id="other-input-7">
+      </div>
+      <div class="step-actions">
+        <button class="btn-next" id="btn-7" disabled>Tovább <span>→</span></button>
+        <button class="btn-back" data-target="6">← Vissza</button>
+        <span class="press-enter">vagy nyomjon <kbd>Enter ↵</kbd></span>
+      </div>
+    </div>
+
+    <!-- Step 8: Kapcsolati adatok -->
+    <div class="form-step" data-step="8">
+      <div class="step-num">8 → Kapcsolati adatok</div>
+      <h2 class="step-q">Hogyan kereshetjük meg Önt az ajánlattal?</h2>
+      <p class="step-hint">Az adatokat kizárólag az ajánlat elkészítéséhez és az egyeztetéshez használjuk fel.</p>
+      <div class="contact-fields">
+        <div class="field-group">
+          <label class="field-label" for="f-nev">Teljes neve <span style="color:#dc2626;">*</span></label>
+          <input type="text" class="field-input" id="f-nev" placeholder="Kovács János" autocomplete="name">
+          <div class="field-error" id="err-nev">Kérjük, adja meg nevét.</div>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="f-ceg">Cég neve</label>
+          <input type="text" class="field-input" id="f-ceg" placeholder="Példa Kft." autocomplete="organization">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="f-email">E-mail cím <span style="color:#dc2626;">*</span></label>
+          <input type="email" class="field-input" id="f-email" placeholder="kovacs.janos@ceg.hu" autocomplete="email">
+          <div class="field-error" id="err-email">Kérjük, adjon meg érvényes e-mail-címet.</div>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="f-tel">Telefonszám</label>
+          <input type="tel" class="field-input" id="f-tel" placeholder="+36 30 000 0000" autocomplete="tel">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="f-megjegyzes">Egyéb megjegyzés, kérdés</label>
+          <textarea class="field-input" id="f-megjegyzes" placeholder="Bármilyen egyedi igényt, kérdést itt tüntethet fel…"></textarea>
+        </div>
+      </div>
+      <div class="step-actions">
+        <button class="btn-next" id="btn-8" style="background:#16a34a;">Ajánlatkérés elküldése ✓</button>
+        <button class="btn-back" data-target="7">← Vissza</button>
+      </div>
+    </div>
+
+    <!-- Thank you -->
+    <div class="thankyou-screen" id="thankyou">
+      <div class="thankyou-icon">✅</div>
+      <h2 class="thankyou-title">Köszönjük az érdeklődést!</h2>
+      <p class="thankyou-sub">Munkatársunk hamarosan felveszi Önnel a kapcsolatot a személyre szabott ajánlattal. Addig is szívesen válaszolunk kérdéseire.</p>
+      <div class="thankyou-actions">
+        <a href="vasarlas-es-rendszerbevezetes.html" class="btn-outline">Bevezetési folyamat →</a>
+        <a href="index.html" class="btn-outline">Vissza a főoldalra</a>
+      </div>
+      <div style="margin-top:32px;font-size:15px;color:var(--gray-500);">
+        Vagy hívja közvetlenül: <a href="tel:+3613654446" style="color:var(--blue);font-weight:600;">+36 (1) 365-4446</a>
+      </div>
+    </div>
+
+  </div><!-- /form-container -->
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo"><span class="logo-q">Q</span><span class="logo-soft">soft</span></div>
+        <p class="footer-desc">Ügyviteli számviteli programcsomagok hazai vállalkozásoknak 1993 óta.</p><br>
+        <div class="footer-contact-item"><span class="fc-icon">📍</span><span>1119 Budapest, Fehérvári út 85. I. emelet</span></div>
+        <div class="footer-contact-item"><span class="fc-icon">📞</span><span><a href="tel:+3613654446" style="color:inherit;">+36 (1) 365-4446</a></span></div>
+        <div class="footer-contact-item"><span class="fc-icon">✉️</span><span><a href="mailto:ertekesites@sup.hu" style="color:inherit;">ertekesites@sup.hu</a></span></div>
+      </div>
+      <div class="footer-col">
+        <h5>Szoftverek</h5>
+        <ul>
+          <li><a href="sup-integralt.html">SUP Vállalatirányítás</a></li>
+          <li><a href="tip-iratkezelo.html">TIP Iratkezelő</a></li>
+          <li><a href="online-informacios-lekerdezesek.html">Online Lekérdezések</a></li>
+          <li><a href="excel-fugvenycsomag.html">Excel függvénycsomag</a></li>
+          <li><a href="referencia-lista.html">Referencia lista</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Modulok</h5>
+        <ul>
+          <li><a href="szamviteli-modul.html">Számviteli modul</a></li>
+          <li><a href="szamlazas-modul.html">Számlázás modul</a></li>
+          <li><a href="szerzodes-nyilvantartas.html">Szerződés nyilvántartás</a></li>
+          <li><a href="hazi-penztar-modul.html">Házipénztár modul</a></li>
+          <li><a href="merleg-es-elemzes-modul.html">Mérleg és elemzés</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Qsoft Kft. Minden jog fenntartva.</div>
+      <div class="footer-links"><a href="#">Adatvédelem</a><a href="#">ÁSZF</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // ── Header scroll ──
+  const hdr = document.getElementById('site-header');
+  window.addEventListener('scroll', () => hdr.classList.toggle('scrolled', window.scrollY > 12), {passive:true});
+
+  // ── Mobile nav ──
+  const hamburger = document.getElementById('hamburger');
+  const navMobile = document.getElementById('nav-mobile');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navMobile.classList.toggle('open');
+  });
+  navMobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    hamburger.classList.remove('active'); navMobile.classList.remove('open');
+  }));
+  const navSzoftverek = document.getElementById('nav-szoftverek');
+  navSzoftverek.addEventListener('click', e => { e.stopPropagation(); navSzoftverek.classList.toggle('open'); });
+  document.addEventListener('click', () => navSzoftverek.classList.remove('open'));
+
+  // ── Form state ──
+  const TOTAL = 8;
+  let current = 1;
+  const answers = {};
+
+  const progressFill  = document.getElementById('progress-fill');
+  const progressLabel = document.getElementById('progress-label');
+  const progressWrap  = document.getElementById('progress-wrap');
+
+  function updateProgress(step) {
+    const pct = ((step - 1) / TOTAL) * 100;
+    progressFill.style.width = pct + '%';
+    progressLabel.textContent = step + ' / ' + TOTAL;
+  }
+
+  function showStep(step) {
+    document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+    const target = document.querySelector('[data-step="' + step + '"]');
+    if (target) { target.classList.add('active'); current = step; }
+    updateProgress(step);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  // ── Option card selection ──
+  document.querySelectorAll('.form-step').forEach(stepEl => {
+    const stepNum = parseInt(stepEl.dataset.step);
+    const cards   = stepEl.querySelectorAll('.option-card');
+    const btnNext = stepEl.querySelector('.btn-next');
+    const otherWrap = document.getElementById('other-wrap-' + stepNum);
+    const otherInput = document.getElementById('other-input-' + stepNum);
+
+    cards.forEach((card, idx) => {
+      card.addEventListener('click', () => {
+        cards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        answers['step' + stepNum] = card.dataset.value;
+
+        // Show/hide "other" input
+        const isOther = card.dataset.value && card.dataset.value.startsWith('egyeb');
+        if (otherWrap) {
+          otherWrap.classList.toggle('visible', isOther);
+          if (isOther && otherInput) { otherInput.focus(); }
+        }
+
+        if (btnNext) {
+          if (stepNum < TOTAL) {
+            // Auto-advance after brief delay if not "other"
+            if (!isOther) {
+              btnNext.disabled = false;
+              setTimeout(() => { if (current === stepNum) advanceStep(stepNum); }, 350);
+            } else {
+              btnNext.disabled = false;
+            }
+          } else {
+            btnNext.disabled = false;
+          }
+        }
+      });
+    });
+
+    // Back buttons
+    stepEl.querySelectorAll('.btn-back').forEach(btn => {
+      btn.addEventListener('click', () => showStep(parseInt(btn.dataset.target)));
+    });
+  });
+
+  function advanceStep(from) {
+    if (from < TOTAL) {
+      showStep(from + 1);
+    }
+  }
+
+  // ── Next buttons (for steps 1-7) ──
+  for (let i = 1; i <= 7; i++) {
+    const btn = document.getElementById('btn-' + i);
+    if (btn) {
+      btn.addEventListener('click', () => {
+        if (!btn.disabled) advanceStep(i);
+      });
+    }
+  }
+
+  // ── Submit (step 8) ──
+  const btn8 = document.getElementById('btn-8');
+  if (btn8) {
+    btn8.addEventListener('click', () => {
+      const nev   = document.getElementById('f-nev');
+      const email = document.getElementById('f-email');
+      let valid   = true;
+
+      // Reset errors
+      document.querySelectorAll('.field-error').forEach(e => e.classList.remove('visible'));
+      document.querySelectorAll('.field-input').forEach(i => i.classList.remove('error'));
+
+      if (!nev.value.trim()) {
+        nev.classList.add('error');
+        document.getElementById('err-nev').classList.add('visible');
+        valid = false;
+      }
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRe.test(email.value.trim())) {
+        email.classList.add('error');
+        document.getElementById('err-email').classList.add('visible');
+        valid = false;
+      }
+      if (!valid) return;
+
+      // Collect all answers
+      answers.nev   = nev.value.trim();
+      answers.ceg   = document.getElementById('f-ceg').value.trim();
+      answers.email = email.value.trim();
+      answers.tel   = document.getElementById('f-tel').value.trim();
+      answers.megjegyzes = document.getElementById('f-megjegyzes').value.trim();
+
+      // Also collect "other" text values
+      for (let i = 1; i <= 7; i++) {
+        const inp = document.getElementById('other-input-' + i);
+        if (inp && inp.value.trim() && answers['step'+i] && answers['step'+i].startsWith('egyeb')) {
+          answers['step'+i+'_egyeb'] = inp.value.trim();
+        }
+      }
+
+      // Show thank you (in production: POST to backend here)
+      document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+      document.getElementById('thankyou').classList.add('active');
+      progressWrap.style.display = 'none';
+      window.scrollTo({top: 0, behavior: 'smooth'});
+
+      console.log('Form answers:', answers);
+    });
+
+    // Enable btn-8 always (validated on submit)
+    btn8.disabled = false;
+  }
+
+  // ── Keyboard: Enter to advance ──
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    // Don't trigger if focus is in textarea
+    if (document.activeElement && document.activeElement.tagName === 'TEXTAREA') return;
+    if (current >= 1 && current <= 7) {
+      const btn = document.getElementById('btn-' + current);
+      if (btn && !btn.disabled) { e.preventDefault(); advanceStep(current); }
+    }
+  });
+
+  // ── Keyboard: A-E shortcuts for option selection ──
+  document.addEventListener('keydown', e => {
+    const keyMap = {a:0,b:1,c:2,d:3,e:4};
+    const k = e.key.toLowerCase();
+    if (!(k in keyMap)) return;
+    if (document.activeElement && ['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+    if (current < 1 || current > 7) return;
+    const stepEl = document.querySelector('[data-step="' + current + '"]');
+    if (!stepEl) return;
+    const cards = stepEl.querySelectorAll('.option-card');
+    const idx = keyMap[k];
+    if (cards[idx]) { e.preventDefault(); cards[idx].click(); }
+  });
+
+  // Initialize
+  updateProgress(1);
+})();
+</script>
+</body>
+</html>

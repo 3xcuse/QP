@@ -127,10 +127,15 @@
         </div>
       </div>
       <a href="sup-integralt.html#modulok">Modulok</a>
-      <a href="vasarlas-es-rendszerbevezetes.html">Ajánlat</a>
+      <div class="nav-item" id="nav-szolgaltatasok">
+        <a href="#">Szolgáltatások</a>
+        <div class="dropdown">
+          <a href="vasarlas-es-rendszerbevezetes.html"><span class="dd-icon">🛒</span>Vásárlás és rendszerbevezetés</a>
+        </div>
+      </div>
       <a href="index.html#kapcsolat">Kapcsolat</a>
     </nav>
-    <a href="vasarlas-es-rendszerbevezetes.html" class="btn-header">Ajánlatot kérek</a>
+    <a href="ajanlatkeres.html" class="btn-header">Ajánlatot kérek</a>
     <button class="hamburger" id="hamburger" aria-label="Menü"><span></span><span></span><span></span></button>
   </div>
   <nav class="nav-mobile" id="nav-mobile">
@@ -138,9 +143,9 @@
     <a href="tip-iratkezelo.html" class="mob-sub">TIP Iratkezelő</a>
     <a href="online-informacios-lekerdezesek.html" class="mob-sub">Online Lekérdezések</a>
     <a href="sup-integralt.html#modulok">Modulok</a>
-    <a href="vasarlas-es-rendszerbevezetes.html">Ajánlat</a>
+    <a href="vasarlas-es-rendszerbevezetes.html" class="mob-sub">Vásárlás és rendszerbevezetés</a>
     <a href="index.html#kapcsolat">Kapcsolat</a>
-    <a href="vasarlas-es-rendszerbevezetes.html" class="btn-mobile">Ajánlatot kérek →</a>
+    <a href="ajanlatkeres.html" class="btn-mobile">Ajánlatot kérek →</a>
   </nav>
 </header>
 
@@ -249,7 +254,7 @@
   navMobile.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hamburger.classList.remove('active');navMobile.classList.remove('open');}));
   const navSzoftverek=document.getElementById('nav-szoftverek');
   navSzoftverek.addEventListener('click',e=>{e.stopPropagation();navSzoftverek.classList.toggle('open');});
-  document.addEventListener('click',()=>navSzoftverek.classList.remove('open'));
+  const navSzolgaltatasok=document.getElementById('nav-szolgaltatasok');if(navSzolgaltatasok){navSzolgaltatasok.addEventListener('click',e=>{e.stopPropagation();navSzolgaltatasok.classList.toggle('open');});}document.addEventListener('click',()=>{navSzoftverek.classList.remove('open');if(navSzolgaltatasok)navSzolgaltatasok.classList.remove('open');});
   const fadeObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');fadeObserver.unobserve(entry.target);}});},{threshold:0.12});
   document.querySelectorAll('.fade-in').forEach(el=>fadeObserver.observe(el));
   // Lightbox
