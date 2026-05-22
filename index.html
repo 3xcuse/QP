@@ -967,23 +967,6 @@
   }, { threshold: 0.5 });
   counters.forEach(c => counterObserver.observe(c));
 
-  /* ── Hero video parallax ── */
-  const heroWrap = document.querySelector('.hero-image-wrap');
-  if (heroWrap && window.innerWidth >= 1024) {
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY * 0.08;
-      heroWrap.style.transform =
-        `perspective(1200px) rotateY(-4deg) translateY(${y}px)`;
-    }, { passive: true });
-    heroWrap.addEventListener('mouseenter', () => {
-      heroWrap.style.transform = `perspective(1200px) rotateY(0deg)`;
-    });
-    heroWrap.addEventListener('mouseleave', () => {
-      const y = window.scrollY * 0.08;
-      heroWrap.style.transform =
-        `perspective(1200px) rotateY(-4deg) translateY(${y}px)`;
-    });
-  }
 </script>
 
 </body>
