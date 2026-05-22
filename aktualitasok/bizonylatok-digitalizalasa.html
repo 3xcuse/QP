@@ -3,12 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Az oldal nem található – Qsoft Kft.</title>
-  <meta name="description" content="A keresett oldal nem található. Látogassa meg a Qsoft Kft. főoldalát.">
-  <meta name="robots" content="noindex, follow">
+  <title>Bizonylatok digitalizálása – Qsoft Kft.</title>
+  <meta name="description" content="Tapasztalataink alapján ügyfeleink részéről megnövekedett az igény a beérkező és kimenő bizonylatok digitalizálására. Komplett megoldásokkal rendelkezünk.">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="hu_HU">
+  <meta property="og:site_name" content="Qsoft Kft.">
+  <meta property="og:url" content="https://qsoft.hu/bizonylatok-digitalizalasa.html">
+  <meta property="og:title" content="Bizonylatok digitalizálása – Qsoft Kft.">
+  <meta property="og:description" content="Tapasztalataink alapján ügyfeleink részéről megnövekedett az igény a beérkező és kimenő bizonylatok digitalizálására. Komplett megoldásokkal rendelkezünk.">
+  <meta property="og:image" content="https://qsoft.hu/pages/30_bizonylatok-digitalizalasa/images/Digitalizalas-1140x458.png">
+  <link rel="canonical" href="https://qsoft.hu/bizonylatok-digitalizalasa.html">
   <style>
-    @font-face { font-family:'Planer'; src:url('fonts/Planer-Regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
-    @font-face { font-family:'Planer'; src:url('fonts/Planer-DemiBold.woff2') format('woff2'); font-weight:600; font-style:normal; font-display:swap; }
+    @font-face{font-family:'Planer';src:url('../fonts/Planer-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+    @font-face{font-family:'Planer';src:url('../fonts/Planer-DemiBold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
     body{font-family:'Planer',system-ui,-apple-system,sans-serif;color:#111827;background:#fff;line-height:1.6;}
@@ -21,8 +28,6 @@
       --radius:12px;--shadow-sm:0 1px 3px rgba(0,0,0,.08);--shadow-md:0 4px 16px rgba(0,0,0,.10);--shadow-lg:0 10px 40px rgba(0,0,0,.14);--transition:0.25s ease;
     }
     .container{max-width:1200px;margin:0 auto;padding:0 32px;}
-
-    /* Header */
     header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--gray-200);transition:box-shadow var(--transition);}
     header.scrolled{box-shadow:var(--shadow-md);}
     .header-inner{max-width:1200px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;}
@@ -55,27 +60,33 @@
     .nav-mobile a:hover{color:var(--blue);}
     .nav-mobile .mob-sub{padding-left:16px;font-size:14px;color:var(--gray-500);}
     .nav-mobile .btn-mobile{margin-top:16px;text-align:center;background:var(--blue);color:#fff;border-radius:8px;padding:12px;font-weight:600;}
-
-    /* 404 hero */
-    .notfound-section{min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;padding:80px 0;background:linear-gradient(160deg,#fff 60%,var(--blue-light));}
-    .notfound-inner{text-align:center;max-width:560px;}
-    .notfound-code{font-size:clamp(80px,15vw,140px);font-weight:600;color:var(--blue);line-height:1;letter-spacing:-0.04em;opacity:.15;}
-    .notfound-title{font-size:clamp(22px,4vw,32px);font-weight:600;color:var(--gray-900);margin-top:-24px;margin-bottom:16px;letter-spacing:-0.02em;}
-    .notfound-sub{font-size:16px;color:var(--gray-500);line-height:1.75;margin-bottom:40px;}
-    .notfound-links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+    .article-nav{padding:100px 0 0;background:#fff;}
+    .article-nav .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-bottom:24px;border-bottom:1px solid var(--gray-200);}
+    .breadcrumb{font-size:13px;color:var(--gray-500);}
+    .breadcrumb a{color:var(--blue);}
+    .breadcrumb a:hover{text-decoration:underline;}
+    .back-link{font-size:14px;color:var(--blue);font-weight:500;display:inline-flex;align-items:center;gap:6px;}
+    .back-link:hover{text-decoration:underline;}
+    .article-hero-img{width:100%;max-height:440px;object-fit:cover;display:block;}
+    .article-body{max-width:800px;margin:0 auto;padding:56px 32px 80px;}
+    .article-badge{display:inline-block;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;background:#d1fae5;color:#065f46;letter-spacing:.04em;text-transform:uppercase;margin-bottom:20px;}
+    .article-title{font-size:clamp(26px,4vw,40px);font-weight:600;color:var(--gray-900);letter-spacing:-0.02em;line-height:1.25;margin-bottom:24px;}
+    .article-body p{font-size:17px;color:var(--gray-700);line-height:1.8;margin-bottom:20px;}
+    .contact-cta{background:var(--blue-light);border:1px solid #b8c5e8;border-radius:var(--radius);padding:28px 32px;margin-top:40px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+    .contact-cta-text h4{font-size:17px;font-weight:600;color:var(--blue);margin-bottom:6px;}
+    .contact-cta-text p{font-size:15px;color:var(--gray-700);margin-bottom:0;}
     .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;font-size:15px;font-weight:600;padding:14px 28px;border-radius:10px;transition:background var(--transition),transform var(--transition),box-shadow var(--transition);}
     .btn-primary:hover{background:var(--blue-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(30,49,132,.35);}
     .btn-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--blue);font-size:15px;font-weight:600;padding:14px 28px;border-radius:10px;border:2px solid var(--blue);transition:background var(--transition),transform var(--transition);}
     .btn-secondary:hover{background:var(--blue-light);transform:translateY(-2px);}
-
-    /* Quick links */
-    .quick-links{margin-top:56px;padding-top:40px;border-top:1px solid var(--gray-200);}
-    .quick-links h3{font-size:14px;font-weight:600;color:var(--gray-500);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:20px;}
-    .quick-links-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
-    .quick-link-chip{font-size:13px;font-weight:500;color:var(--blue);background:var(--blue-light);padding:8px 16px;border-radius:50px;transition:background var(--transition),color var(--transition);}
-    .quick-link-chip:hover{background:var(--blue);color:#fff;}
-
-    /* Footer */
+    .cta-bar{background:var(--blue);color:#fff;padding:64px 0;text-align:center;}
+    .cta-bar h2{font-size:26px;font-weight:600;margin-bottom:10px;}
+    .cta-bar p{font-size:16px;color:rgba(255,255,255,.75);margin-bottom:32px;}
+    .cta-bar .btn-primary{background:#fff;color:var(--blue);}
+    .cta-bar .btn-primary:hover{background:var(--blue-light);}
+    .cta-bar .btn-secondary{border-color:rgba(255,255,255,.5);color:#fff;}
+    .cta-bar .btn-secondary:hover{background:rgba(255,255,255,.1);}
+    .cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
     footer{background:var(--dark);color:rgba(255,255,255,.65);}
     .footer-top{padding:64px 0 48px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;border-bottom:1px solid rgba(255,255,255,.08);}
     .footer-logo{display:flex;align-items:baseline;margin-bottom:16px;}
@@ -93,83 +104,97 @@
     .footer-links{display:flex;gap:24px;}
     .footer-links a{font-size:13px;color:rgba(255,255,255,.4);transition:color var(--transition);}
     .footer-links a:hover{color:rgba(255,255,255,.8);}
-
+    .fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+    .fade-in.visible{opacity:1;transform:translateY(0);}
+    .fade-in-delay-1{transition-delay:0.1s;}
+    .nav-desktop > a.nav-active{color:var(--blue);background:var(--blue-light);font-weight:600;}
+    #back-to-top{position:fixed;bottom:28px;right:28px;z-index:900;background:var(--blue);color:#fff;border:none;border-radius:50%;width:44px;height:44px;font-size:20px;line-height:1;cursor:pointer;opacity:0;transform:translateY(12px);transition:opacity var(--transition),transform var(--transition),background var(--transition);pointer-events:none;box-shadow:var(--shadow-md);}
+    #back-to-top.visible{opacity:1;transform:translateY(0);pointer-events:auto;}
+    #back-to-top:hover{background:var(--blue-dark);}
     @media(max-width:1023px){.footer-top{grid-template-columns:1fr 1fr;}}
     @media(max-width:767px){
       .container{padding:0 20px;}
+      .article-body{padding:40px 20px 64px;}
+      .contact-cta{flex-direction:column;gap:16px;}
       .footer-top{grid-template-columns:1fr;}.footer-bottom{flex-direction:column;text-align:center;}
       .nav-desktop{display:none;}.btn-header{display:none;}.hamburger{display:flex;}
-      .notfound-links{flex-direction:column;align-items:center;}
     }
   </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header id="site-header">
   <div class="header-inner">
-    <a href="index.html" class="logo"><span class="logo-q">Q</span><span class="logo-soft">soft</span></a>
+    <a href="../index.html" class="logo"><span class="logo-q">Q</span><span class="logo-soft">soft</span></a>
     <nav class="nav-desktop">
       <div class="nav-item" id="nav-szoftverek">
         <a href="#">Szoftverek</a>
         <div class="dropdown">
-          <a href="sup-integralt.html"><span class="dd-icon">🏢</span>SUP Vállalatirányítási Rendszer</a>
-          <a href="tip-iratkezelo.html"><span class="dd-icon">📁</span>TIP Iratkezelő Rendszer</a>
-          <a href="online-informacios-lekerdezesek.html"><span class="dd-icon">🌐</span>Online Információs Lekérdezések</a>
+          <a href="../sup-integralt.html"><span class="dd-icon">🏢</span>SUP Vállalatirányítási Rendszer</a>
+          <a href="../tip-iratkezelo.html"><span class="dd-icon">📁</span>TIP Iratkezelő Rendszer</a>
+          <a href="../online-informacios-lekerdezesek.html"><span class="dd-icon">🌐</span>Online Információs Lekérdezések</a>
           <div class="dropdown-divider"></div>
-          <a href="sup-integralt.html#modulok"><span class="dd-icon">🧩</span>Összes modul</a>
-          <a href="excel-fugvenycsomag.html"><span class="dd-icon">📊</span>Excel függvénycsomag</a>
-          <a href="referencia-lista.html"><span class="dd-icon">✅</span>Referencia lista</a>
+          <a href="../sup-integralt.html#modulok"><span class="dd-icon">🧩</span>Összes modul</a>
+          <a href="../excel-fugvenycsomag.html"><span class="dd-icon">📊</span>Excel függvénycsomag</a>
+          <a href="../referencia-lista.html"><span class="dd-icon">✅</span>Referencia lista</a>
         </div>
       </div>
-      <a href="sup-integralt.html#modulok">Modulok</a>
-      <a href="vasarlas-es-rendszerbevezetes.html">Ajánlat</a>
-      <a href="index.html#kapcsolat">Kapcsolat</a>
+      <a href="../sup-integralt.html#modulok">Modulok</a>
+      <a href="../vasarlas-es-rendszerbevezetes.html">Ajánlat</a>
+      <a href="../index.html#kapcsolat">Kapcsolat</a>
     </nav>
-    <a href="vasarlas-es-rendszerbevezetes.html" class="btn-header">Ajánlatot kérek</a>
+    <a href="../vasarlas-es-rendszerbevezetes.html" class="btn-header">Ajánlatot kérek</a>
     <button class="hamburger" id="hamburger" aria-label="Menü"><span></span><span></span><span></span></button>
   </div>
   <nav class="nav-mobile" id="nav-mobile">
-    <a href="sup-integralt.html">SUP Vállalatirányítási Rendszer</a>
-    <a href="tip-iratkezelo.html" class="mob-sub">TIP Iratkezelő Rendszer</a>
-    <a href="online-informacios-lekerdezesek.html" class="mob-sub">Online Információs Lekérdezések</a>
-    <a href="sup-integralt.html#modulok">Modulok</a>
-    <a href="vasarlas-es-rendszerbevezetes.html">Ajánlat</a>
-    <a href="index.html#kapcsolat">Kapcsolat</a>
-    <a href="vasarlas-es-rendszerbevezetes.html" class="btn-mobile">Ajánlatot kérek →</a>
+    <a href="../sup-integralt.html">SUP Vállalatirányítási Rendszer</a>
+    <a href="../tip-iratkezelo.html" class="mob-sub">TIP Iratkezelő Rendszer</a>
+    <a href="../online-informacios-lekerdezesek.html" class="mob-sub">Online Információs Lekérdezések</a>
+    <a href="../sup-integralt.html#modulok">Modulok</a>
+    <a href="../vasarlas-es-rendszerbevezetes.html">Ajánlat</a>
+    <a href="../index.html#kapcsolat">Kapcsolat</a>
+    <a href="../vasarlas-es-rendszerbevezetes.html" class="btn-mobile">Ajánlatot kérek →</a>
   </nav>
 </header>
 
-<!-- 404 SECTION -->
-<section class="notfound-section">
-  <div class="notfound-inner">
-    <div class="notfound-code">404</div>
-    <h1 class="notfound-title">Az oldal nem található</h1>
-    <p class="notfound-sub">
-      A keresett oldal nem létezik, esetleg áthelyezték vagy törölték.
-      Látogassa meg főoldalunkat, vagy válasszon az alábbi oldalak közül.
-    </p>
-    <div class="notfound-links">
-      <a href="index.html" class="btn-primary">← Vissza a főoldalra</a>
-      <a href="vasarlas-es-rendszerbevezetes.html" class="btn-secondary">Ajánlatot kérek</a>
+<div class="article-nav">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="../index.html">Főoldal</a> › <a href="aktualitasaink.html">Aktualitásaink</a> › Bizonylatok digitalizálása
     </div>
+    <a href="aktualitasaink.html" class="back-link">← Vissza az aktualitásokhoz</a>
+  </div>
+</div>
 
-    <div class="quick-links">
-      <h3>Gyors linkek</h3>
-      <div class="quick-links-grid">
-        <a href="sup-integralt.html" class="quick-link-chip">SUP Rendszer</a>
-        <a href="tip-iratkezelo.html" class="quick-link-chip">TIP Iratkezelő</a>
-        <a href="excel-fugvenycsomag.html" class="quick-link-chip">Excel függvénycsomag</a>
-        <a href="szamviteli-modul.html" class="quick-link-chip">Számviteli modul</a>
-        <a href="penzugyi-modul.html" class="quick-link-chip">Pénzügyi modul</a>
-        <a href="referencia-lista.html" class="quick-link-chip">Referencia lista</a>
-        <a href="index.html#kapcsolat" class="quick-link-chip">Kapcsolat</a>
-      </div>
+<img src="../pages/30_bizonylatok-digitalizalasa/images/Digitalizalas-1140x458.png"
+     alt="Bizonylatok digitalizálása" class="article-hero-img fade-in" loading="eager">
+
+<div class="article-body">
+  <span class="article-badge">Megoldás</span>
+  <h1 class="article-title fade-in">Bizonylatok digitalizálása</h1>
+
+  <p class="fade-in">Tapasztalataink alapján ügyfeleink részéről megnövekedett az igény a beérkező és kimenő bizonylatok digitalizálására. Több év tapasztalattal a hátunk mögött készen állunk a felmerült igények kielégítésére, azokra komplett megoldásokkal rendelkezünk. Kérem keresse ügyfélszolgálatunkat a folyamatok megismerése érdekében.</p>
+
+  <div class="contact-cta fade-in">
+    <div class="contact-cta-text">
+      <h4>Érdeklődjön nálunk!</h4>
+      <p>Ügyfélszolgálatunk részletesen tájékoztatja a digitalizálási folyamatokról és a személyre szabott megoldásokról.</p>
+    </div>
+    <a href="tel:+3613654446" class="btn-primary">📞 +36 (1) 365-4446</a>
+  </div>
+</div>
+
+<section class="cta-bar">
+  <div class="container">
+    <h2>Készen állunk segíteni!</h2>
+    <p>Vegye fel velünk a kapcsolatot és ismerje meg digitalizálási megoldásainkat.</p>
+    <div class="cta-buttons">
+      <a href="../vasarlas-es-rendszerbevezetes.html" class="btn-primary">Ajánlatot kérek →</a>
+      <a href="aktualitasaink.html" class="btn-secondary">Vissza az aktualitásokhoz</a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-top">
@@ -187,20 +212,21 @@
       <div class="footer-col">
         <h5>Szoftverek</h5>
         <ul>
-          <li><a href="sup-integralt.html">SUP Vállalatirányítás</a></li>
-          <li><a href="tip-iratkezelo.html">TIP Iratkezelő</a></li>
-          <li><a href="online-informacios-lekerdezesek.html">Online Lekérdezések</a></li>
-          <li><a href="excel-fugvenycsomag.html">Excel függvénycsomag</a></li>
-          <li><a href="referencia-lista.html">Referencia lista</a></li>
+          <li><a href="../sup-integralt.html">SUP Vállalatirányítás</a></li>
+          <li><a href="../tip-iratkezelo.html">TIP Iratkezelő</a></li>
+          <li><a href="../online-informacios-lekerdezesek.html">Online Lekérdezések</a></li>
+          <li><a href="../excel-fugvenycsomag.html">Excel függvénycsomag</a></li>
+          <li><a href="../referencia-lista.html">Referencia lista</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h5>Információ</h5>
+        <h5>Aktualitások</h5>
         <ul>
-          <li><a href="index.html">Főoldal</a></li>
-          <li><a href="mukodesi-feltetelek.html">Működési feltételek</a></li>
-          <li><a href="vasarlas-es-rendszerbevezetes.html">Vásárlás</a></li>
-          <li><a href="index.html#kapcsolat">Kapcsolat</a></li>
+          <li><a href="majusi-rendszervaltas.html">Májusi rendszerváltás</a></li>
+          <li><a href="bizonylatok-digitalizalasa.html">Bizonylatok digitalizálása</a></li>
+          <li><a href="ai-szerepe-a-sup-rendszer-fejleszteseben.html">AI a SUP fejlesztésben</a></li>
+          <li><a href="miert-valassza-rendszerunket.html">Miért válassza rendszerünket?</a></li>
+          <li><a href="utanvet-es-bankkartya-elszamolas-kezelese.html">Utánvét és bankkártya</a></li>
         </ul>
       </div>
     </div>
@@ -210,6 +236,8 @@
     </div>
   </div>
 </footer>
+
+<button id="back-to-top" aria-label="Vissza az oldal tetejére">↑</button>
 
 <script>
   const header=document.getElementById('site-header');
@@ -221,6 +249,15 @@
   const navSzoftverek=document.getElementById('nav-szoftverek');
   navSzoftverek.addEventListener('click',e=>{e.stopPropagation();navSzoftverek.classList.toggle('open');});
   document.addEventListener('click',()=>navSzoftverek.classList.remove('open'));
+  const fadeObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');fadeObserver.unobserve(entry.target);}});},{threshold:0.12});
+  document.querySelectorAll('.fade-in').forEach(el=>fadeObserver.observe(el));
+  (function(){
+    document.querySelectorAll('.nav-desktop > a').forEach(function(a){
+      if((a.getAttribute('href')||'')==='aktualitasaink.html') a.classList.add('nav-active');
+    });
+  })();
+  const btt=document.getElementById('back-to-top');
+  if(btt){window.addEventListener('scroll',()=>{btt.classList.toggle('visible',window.scrollY>400);},{passive:true});btt.addEventListener('click',()=>{window.scrollTo({top:0,behavior:'smooth'});});}
 </script>
 </body>
 </html>
