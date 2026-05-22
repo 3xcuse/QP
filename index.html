@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qsoft Kft. – Ügyviteli számviteli programcsomagok</title>
+  <meta name="description" content="A Qsoft Kft. több mint 30 éve fejleszt integrált vállalatirányítási rendszereket hazai vállalkozások számára. SUP, TIP, Online Lekérdezések.">
+  <style>
+    @font-face {
+      font-family: 'Planer';
+      src: url('fonts/Planer-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Planer';
+      src: url('fonts/Planer-DemiBold.woff2') format('woff2');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Planer', system-ui, -apple-system, sans-serif;
+      color: #111827;
+      background: #ffffff;
+      line-height: 1.6;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; }
+
+    /* ── Design tokens ── */
+    :root {
+      --blue:      #1e3184;
+      --blue-dark: #162560;
+      --blue-light:#e8ecf7;
+      --gray-50:   #f9fafb;
+      --gray-100:  #f3f4f6;
+      --gray-200:  #e5e7eb;
+      --gray-400:  #9ca3af;
+      --gray-500:  #6b7280;
+      --gray-600:  #6e7681;
+      --gray-700:  #374151;
+      --gray-900:  #111827;
+      --dark:      #0f172a;
+      --radius:    12px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+      --shadow-md: 0 4px 16px rgba(0,0,0,.10);
+      --shadow-lg: 0 10px 40px rgba(0,0,0,.14);
+      --transition: 0.25s ease;
+    }
+
+    /* ── Layout helpers ── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+    .section    { padding: 96px 0; }
+    .section-sm { padding: 64px 0; }
+    .section-title {
+      font-size: 32px; font-weight: 600; color: var(--gray-900);
+      margin-bottom: 12px; letter-spacing: -0.02em;
+    }
+    .section-sub {
+      font-size: 17px; color: var(--gray-500); max-width: 560px; line-height: 1.7;
+      margin-bottom: 56px;
+    }
+
+    /* ════════════════════════════════════
+       HEADER
+    ════════════════════════════════════ */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--gray-200);
+      transition: box-shadow var(--transition);
+    }
+    header.scrolled { box-shadow: var(--shadow-md); }
+
+    .header-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 32px;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+    }
+
+    /* Logo */
+    .logo {
+      display: inline-flex; align-items: baseline;
+      text-decoration: none; user-select: none; line-height: 1;
+    }
+    .logo-q    { font-size: 26px; font-weight: 600; color: var(--blue); letter-spacing: -0.03em; }
+    .logo-soft { font-size: 26px; font-weight: 400; color: var(--gray-600); letter-spacing: -0.03em; }
+
+    /* Desktop nav */
+    .nav-desktop { display: flex; align-items: center; gap: 6px; }
+    .nav-desktop > a,
+    .nav-item > a {
+      font-size: 14px; font-weight: 500; color: var(--gray-700);
+      padding: 8px 14px; border-radius: 8px;
+      transition: color var(--transition), background var(--transition);
+      white-space: nowrap;
+    }
+    .nav-desktop > a:hover,
+    .nav-item > a:hover { color: var(--blue); background: var(--blue-light); }
+
+    /* Dropdown */
+    .nav-item { position: relative; }
+    .nav-item > a { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+    .nav-item > a::after {
+      content: ''; width: 0; height: 0;
+      border-left: 4px solid transparent; border-right: 4px solid transparent;
+      border-top: 5px solid currentColor; transition: transform var(--transition);
+    }
+    .nav-item.open > a::after { transform: rotate(180deg); }
+
+    .dropdown {
+      position: absolute; top: calc(100% + 8px); left: 0;
+      background: #fff; border: 1px solid var(--gray-200);
+      border-radius: var(--radius); box-shadow: var(--shadow-lg);
+      min-width: 240px; padding: 8px;
+      opacity: 0; visibility: hidden; transform: translateY(-8px);
+      transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
+    }
+    .nav-item.open .dropdown,
+    .nav-item:hover .dropdown {
+      opacity: 1; visibility: visible; transform: translateY(0);
+    }
+    .dropdown a {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; color: var(--gray-700); padding: 10px 12px;
+      border-radius: 8px; transition: background var(--transition), color var(--transition);
+    }
+    .dropdown a:hover { background: var(--blue-light); color: var(--blue); }
+    .dropdown a .dd-icon { font-size: 16px; width: 22px; text-align: center; }
+    .dropdown-divider { height: 1px; background: var(--gray-200); margin: 6px 0; }
+
+    /* CTA header gomb */
+    .btn-header {
+      font-size: 14px; font-weight: 600; color: #fff;
+      background: var(--blue); padding: 9px 20px;
+      border-radius: 8px; transition: background var(--transition), transform var(--transition);
+    }
+    .btn-header:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+    /* Hamburger */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 8px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px; background: var(--gray-700);
+      border-radius: 2px; transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile nav */
+    .nav-mobile {
+      display: none; flex-direction: column;
+      background: #fff; border-top: 1px solid var(--gray-200);
+      padding: 16px 24px 24px;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      font-size: 15px; font-weight: 500; color: var(--gray-700);
+      padding: 10px 0; border-bottom: 1px solid var(--gray-100);
+    }
+    .nav-mobile a:hover { color: var(--blue); }
+    .nav-mobile .mob-sub { padding-left: 16px; font-size: 14px; color: var(--gray-500); }
+    .nav-mobile .btn-mobile {
+      margin-top: 16px; text-align: center;
+      background: var(--blue); color: #fff; border-radius: 8px; padding: 12px;
+      font-weight: 600;
+    }
+
+    /* ════════════════════════════════════
+       HERO
+    ════════════════════════════════════ */
+    .hero {
+      padding: 160px 0 96px;
+      background: linear-gradient(160deg, #ffffff 60%, var(--blue-light) 100%);
+    }
+    .hero-inner { max-width: 720px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue-light); color: var(--blue);
+      font-size: 13px; font-weight: 600; padding: 6px 14px;
+      border-radius: 100px; margin-bottom: 28px; letter-spacing: 0.02em;
+    }
+    .hero-badge::before { content: '●'; font-size: 8px; }
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 56px); font-weight: 600;
+      color: var(--gray-900); line-height: 1.15; letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+    .hero h1 em { color: var(--blue); font-style: normal; }
+    .hero p {
+      font-size: 19px; color: var(--gray-500); line-height: 1.75;
+      max-width: 580px; margin-bottom: 44px;
+    }
+    .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue); color: #fff;
+      font-size: 15px; font-weight: 600; padding: 14px 28px;
+      border-radius: 10px; transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+    .btn-primary:hover {
+      background: var(--blue-dark); transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(30,49,132,.35);
+    }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--blue);
+      font-size: 15px; font-weight: 600; padding: 14px 28px;
+      border-radius: 10px; border: 2px solid var(--blue);
+      transition: background var(--transition), transform var(--transition);
+    }
+    .btn-secondary:hover { background: var(--blue-light); transform: translateY(-2px); }
+
+    /* ════════════════════════════════════
+       STATS
+    ════════════════════════════════════ */
+    .stats {
+      background: var(--blue); color: #fff;
+      padding: 64px 0;
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; text-align: center;
+    }
+    .stat-item {
+      padding: 24px 16px;
+      border-right: 1px solid rgba(255,255,255,.15);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-size: 52px; font-weight: 600; line-height: 1;
+      letter-spacing: -0.03em; margin-bottom: 8px;
+      color: #fff;
+    }
+    .stat-num .stat-suffix { font-size: 32px; }
+    .stat-label { font-size: 14px; color: rgba(255,255,255,.7); font-weight: 500; }
+
+    /* ════════════════════════════════════
+       PRODUCTS
+    ════════════════════════════════════ */
+    .products { background: #fff; }
+    .products-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+    }
+    .product-card {
+      background: #fff; border: 1px solid var(--gray-200);
+      border-radius: var(--radius); padding: 36px;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      cursor: pointer;
+    }
+    .product-card:hover {
+      transform: translateY(-4px); box-shadow: var(--shadow-lg);
+      border-color: var(--blue);
+    }
+    .product-icon {
+      width: 52px; height: 52px; background: var(--blue-light);
+      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin-bottom: 20px;
+    }
+    .product-card h3 {
+      font-size: 18px; font-weight: 600; color: var(--gray-900);
+      margin-bottom: 10px; letter-spacing: -0.01em;
+    }
+    .product-card p { font-size: 14px; color: var(--gray-500); line-height: 1.7; margin-bottom: 20px; }
+    .product-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 14px; font-weight: 600; color: var(--blue);
+      transition: gap var(--transition);
+    }
+    .product-link:hover { gap: 10px; }
+    .product-link::after { content: '→'; }
+
+    /* ════════════════════════════════════
+       MODULES
+    ════════════════════════════════════ */
+    .modules { background: var(--gray-50); }
+    .modules-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .module-card {
+      background: #fff; border: 1px solid var(--gray-200);
+      border-radius: var(--radius); padding: 24px;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+    .module-card:hover {
+      transform: translateY(-3px); box-shadow: var(--shadow-md);
+      border-color: var(--blue);
+    }
+    .module-icon { font-size: 28px; margin-bottom: 12px; }
+    .module-card h4 { font-size: 15px; font-weight: 600; color: var(--gray-900); margin-bottom: 6px; }
+    .module-card p { font-size: 13px; color: var(--gray-500); line-height: 1.6; }
+
+    /* ════════════════════════════════════
+       TESTIMONIALS
+    ════════════════════════════════════ */
+    .testimonials { background: #fff; }
+    .testi-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .testi-card {
+      background: var(--gray-50); border: 1px solid var(--gray-200);
+      border-radius: var(--radius); padding: 32px;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .testi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .testi-quote {
+      font-size: 32px; color: var(--blue); line-height: 1;
+      margin-bottom: 16px; font-family: Georgia, serif;
+    }
+    .testi-card p { font-size: 14px; color: var(--gray-700); line-height: 1.75; margin-bottom: 24px; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      object-fit: cover; border: 2px solid var(--blue-light);
+    }
+    .testi-avatar-placeholder {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--blue-light); display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 600; color: var(--blue); flex-shrink: 0;
+    }
+    .testi-name { font-size: 14px; font-weight: 600; color: var(--gray-900); }
+    .testi-role { font-size: 12px; color: var(--gray-500); }
+
+    /* ════════════════════════════════════
+       SPECIAL OFFER
+    ════════════════════════════════════ */
+    .offer { background: var(--gray-50); }
+    .offer-card {
+      background: #fff; border: 2px solid var(--blue);
+      border-radius: 20px; padding: 56px; position: relative; overflow: hidden;
+    }
+    .offer-card::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 200px; height: 200px; background: var(--blue-light);
+      border-radius: 50%; z-index: 0;
+    }
+    .offer-card > * { position: relative; z-index: 1; }
+    .offer-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #fef3c7; color: #92400e;
+      font-size: 12px; font-weight: 700; padding: 5px 12px;
+      border-radius: 100px; margin-bottom: 24px; letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .offer-inner { display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; }
+    .offer-card h2 {
+      font-size: 30px; font-weight: 600; color: var(--gray-900);
+      letter-spacing: -0.02em; margin-bottom: 16px;
+    }
+    .offer-card h2 strong { color: var(--blue); }
+    .offer-card p { font-size: 15px; color: var(--gray-500); line-height: 1.7; max-width: 500px; }
+    .offer-perks { margin-top: 24px; display: flex; flex-direction: column; gap: 8px; }
+    .offer-perk {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; font-weight: 500; color: var(--gray-700);
+    }
+    .offer-perk::before { content: '✓'; color: var(--blue); font-weight: 700; font-size: 16px; }
+    .offer-cta { display: flex; flex-direction: column; align-items: center; gap: 12px; flex-shrink: 0; }
+    .offer-discount {
+      font-size: 80px; font-weight: 600; color: var(--blue);
+      line-height: 1; letter-spacing: -0.04em;
+    }
+    .offer-discount span { font-size: 40px; }
+    .offer-expire { font-size: 12px; color: var(--gray-500); text-align: center; }
+
+    /* ════════════════════════════════════
+       CONTACTS
+    ════════════════════════════════════ */
+    .contacts { background: #fff; }
+    .contacts-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .contact-card {
+      background: var(--gray-50); border: 1px solid var(--gray-200);
+      border-radius: var(--radius); padding: 32px; text-align: center;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+    .contact-card:hover {
+      transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--blue);
+    }
+    .contact-photo {
+      width: 96px; height: 96px; border-radius: 50%; object-fit: cover;
+      margin: 0 auto 20px; border: 3px solid var(--blue-light);
+    }
+    .contact-name { font-size: 17px; font-weight: 600; color: var(--gray-900); margin-bottom: 4px; }
+    .contact-title { font-size: 13px; color: var(--blue); font-weight: 500; margin-bottom: 20px; }
+    .contact-info { display: flex; flex-direction: column; gap: 8px; }
+    .contact-info a {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-size: 13px; color: var(--gray-600);
+      transition: color var(--transition);
+    }
+    .contact-info a:hover { color: var(--blue); }
+    .contact-info .ci-icon { font-size: 14px; }
+
+    /* ════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════ */
+    footer {
+      background: var(--dark); color: rgba(255,255,255,.65);
+    }
+    .footer-top {
+      padding: 64px 0 48px;
+      display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .footer-logo { display: flex; align-items: baseline; gap: 0; margin-bottom: 16px; }
+    .footer-logo .logo-q { color: #fff; }
+    .footer-logo .logo-soft { color: rgba(255,255,255,.5); }
+    .footer-desc { font-size: 14px; line-height: 1.75; max-width: 300px; }
+    .footer-col h5 {
+      font-size: 13px; font-weight: 600; color: #fff; letter-spacing: 0.06em;
+      text-transform: uppercase; margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a { font-size: 14px; color: rgba(255,255,255,.55); transition: color var(--transition); }
+    .footer-col ul a:hover { color: #fff; }
+    .footer-contact-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; line-height: 1.6; margin-bottom: 12px;
+    }
+    .footer-contact-item .fc-icon { font-size: 15px; flex-shrink: 0; margin-top: 2px; }
+    .footer-bottom {
+      padding: 24px 0; display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    }
+    .footer-copy { font-size: 13px; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,.4); transition: color var(--transition); }
+    .footer-links a:hover { color: rgba(255,255,255,.8); }
+
+    /* ════════════════════════════════════
+       SCROLL ANIMATIONS
+    ════════════════════════════════════ */
+    .fade-in {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .fade-in-delay-1 { transition-delay: 0.1s; }
+    .fade-in-delay-2 { transition-delay: 0.2s; }
+    .fade-in-delay-3 { transition-delay: 0.3s; }
+    .fade-in-delay-4 { transition-delay: 0.4s; }
+
+    /* ════════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════════ */
+    @media (max-width: 1023px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .modules-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .stat-item:nth-child(3) { border-right: 1px solid rgba(255,255,255,.15); }
+      .testi-grid { grid-template-columns: repeat(2, 1fr); }
+      .contacts-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .offer-inner { grid-template-columns: 1fr; }
+      .offer-cta { flex-direction: row; align-items: center; }
+    }
+
+    @media (max-width: 767px) {
+      .container { padding: 0 20px; }
+      .section { padding: 64px 0; }
+      .section-title { font-size: 26px; }
+      .hero { padding: 120px 0 64px; }
+      .products-grid,
+      .modules-grid,
+      .testi-grid,
+      .contacts-grid { grid-template-columns: 1fr; }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .stat-item:nth-child(2) { border-right: none; }
+      .stat-item:nth-child(3) { border-right: 1px solid rgba(255,255,255,.15); }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .nav-desktop { display: none; }
+      .btn-header { display: none; }
+      .hamburger { display: flex; }
+      .offer-card { padding: 32px 24px; }
+      .offer-discount { font-size: 56px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     HEADER
+════════════════════════════════════ -->
+<header id="site-header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <span class="logo-q">Q</span><span class="logo-soft">soft</span>
+    </a>
+
+    <nav class="nav-desktop">
+      <div class="nav-item" id="nav-szoftverek">
+        <a href="#">Szoftverek</a>
+        <div class="dropdown">
+          <a href="#termekek"><span class="dd-icon">🏢</span>SUP Vállalatirányítási Rendszer</a>
+          <a href="#termekek"><span class="dd-icon">📁</span>TIP Iratkezelő Rendszer</a>
+          <a href="#termekek"><span class="dd-icon">🌐</span>Online Információs Lekérdezések</a>
+          <div class="dropdown-divider"></div>
+          <a href="#modulok"><span class="dd-icon">🧩</span>Összes modul</a>
+          <a href="#termekek"><span class="dd-icon">📊</span>Excel függvénycsomag</a>
+          <a href="#termekek"><span class="dd-icon">✅</span>Referencia lista</a>
+        </div>
+      </div>
+      <a href="#modulok">Modulok</a>
+      <a href="#ajanlat">Ajánlat</a>
+      <a href="#kapcsolat">Kapcsolat</a>
+    </nav>
+
+    <a href="#kapcsolat" class="btn-header">Ajánlatot kérek</a>
+
+    <button class="hamburger" id="hamburger" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Mobile nav -->
+  <nav class="nav-mobile" id="nav-mobile">
+    <a href="#termekek">SUP Vállalatirányítási Rendszer</a>
+    <a href="#termekek" class="mob-sub">TIP Iratkezelő Rendszer</a>
+    <a href="#termekek" class="mob-sub">Online Információs Lekérdezések</a>
+    <a href="#modulok">Modulok</a>
+    <a href="#ajanlat">Különleges ajánlat</a>
+    <a href="#kapcsolat">Kapcsolat</a>
+    <a href="#kapcsolat" class="btn-mobile">Ajánlatot kérek →</a>
+  </nav>
+</header>
+
+<!-- ════════════════════════════════════
+     HERO
+════════════════════════════════════ -->
+<section class="hero" id="fooldal">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-badge fade-in">Több mint 30 éves szakmai tapasztalat</div>
+      <h1 class="fade-in fade-in-delay-1">
+        Ügyviteli megoldások<br><em>vállalkozásoknak</em>
+      </h1>
+      <p class="fade-in fade-in-delay-2">
+        A Qsoft Kft. integrált vállalatirányítási rendszerei segítenek a könyvelés, pénzügy, raktár és számlázás folyamatait egy helyen kezelni — egyszerűen, megbízhatóan.
+      </p>
+      <div class="hero-cta fade-in fade-in-delay-3">
+        <a href="#kapcsolat" class="btn-primary">Ajánlatot kérek →</a>
+        <a href="#termekek" class="btn-secondary">Megismeri a rendszert</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     STATS
+════════════════════════════════════ -->
+<section class="stats" id="statisztikak">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item fade-in">
+        <div class="stat-num"><span class="counter" data-target="30">0</span><span class="stat-suffix">+</span></div>
+        <div class="stat-label">Év tapasztalat</div>
+      </div>
+      <div class="stat-item fade-in fade-in-delay-1">
+        <div class="stat-num"><span class="counter" data-target="1000">0</span><span class="stat-suffix">+</span></div>
+        <div class="stat-label">Szerződő ügyfél</div>
+      </div>
+      <div class="stat-item fade-in fade-in-delay-2">
+        <div class="stat-num"><span class="counter" data-target="1000">0</span><span class="stat-suffix">+</span></div>
+        <div class="stat-label">Könyvelt cég</div>
+      </div>
+      <div class="stat-item fade-in fade-in-delay-3">
+        <div class="stat-num"><span class="counter" data-target="1000">0</span><span class="stat-suffix">+</span></div>
+        <div class="stat-label">SUP felhasználó</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     PRODUCTS
+════════════════════════════════════ -->
+<section class="section products" id="termekek">
+  <div class="container">
+    <h2 class="section-title fade-in">Kiemelt termékeink</h2>
+    <p class="section-sub fade-in fade-in-delay-1">Integrált szoftverek, amelyek az Ön vállalkozásának minden területét lefedik.</p>
+    <div class="products-grid">
+      <div class="product-card fade-in">
+        <div class="product-icon">🏢</div>
+        <h3>SUP Integrált Vállalatirányítási Rendszer</h3>
+        <p>Belföldi és nemzetközi tevékenységet folytató gazdálkodó egységek részére terveztük. A programcsomag legtöbb szervezet tevékenységi körében megfelel.</p>
+        <a href="#modulok" class="product-link">Részletek</a>
+      </div>
+      <div class="product-card fade-in fade-in-delay-1">
+        <div class="product-icon">📁</div>
+        <h3>TIP Iratkezelő és Információs Rendszer</h3>
+        <p>Beérkező számlákat, pénztári bizonylatokat és egyéb dokumentumokat kezel rendszeres nyilvántartással és elektronikus tárolási lehetőségekkel.</p>
+        <a href="#" class="product-link">Részletek</a>
+      </div>
+      <div class="product-card fade-in fade-in-delay-2">
+        <div class="product-icon">🌐</div>
+        <h3>Online Információs Lekérdezések</h3>
+        <p>A SUP rendszerhez kapcsolódva internet alapú adatlekérdezést kínál menedzserek és kontrollerek számára — bárhonnan, bármikor.</p>
+        <a href="#" class="product-link">Részletek</a>
+      </div>
+      <div class="product-card fade-in fade-in-delay-3">
+        <div class="product-icon">✅</div>
+        <h3>Miért válassza rendszerünket?</h3>
+        <p>Több mint 30 éves szakmai tapasztalat, felhasználóbarát felület, átlátható logikai struktúra, jól bevált helpdesk szolgáltatás és cégre szabható funkciók.</p>
+        <a href="#ajanlat" class="product-link">Megtudja miért</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     MODULES
+════════════════════════════════════ -->
+<section class="section modules" id="modulok">
+  <div class="container">
+    <h2 class="section-title fade-in">SUP Rendszer moduljai</h2>
+    <p class="section-sub fade-in fade-in-delay-1">Minden modul szorosan integrált — az egyik helyen rögzített adat azonnal elérhető a többi modulban.</p>
+    <div class="modules-grid">
+      <div class="module-card fade-in">
+        <div class="module-icon">📊</div>
+        <h4>Számviteli modul</h4>
+        <p>A különböző modulokban rögzített adatok a számviteli modulban koncentrálódnak.</p>
+      </div>
+      <div class="module-card fade-in fade-in-delay-1">
+        <div class="module-icon">💳</div>
+        <h4>Pénzügyi modul</h4>
+        <p>Minden készpénzmozgással járó gazdasági esemény nyilvántartása az eseménnyel egyidejűleg.</p>
+      </div>
+      <div class="module-card fade-in fade-in-delay-2">
+        <div class="module-icon">🏭</div>
+        <h4>Tárgyi eszköz modul</h4>
+        <p>Immateriális javak, tárgyi eszközök és beruházások egyedi nyilvántartása, számviteli törvénynek megfelelően.</p>
+      </div>
+      <div class="module-card fade-in">
+        <div class="module-icon">📦</div>
+        <h4>Raktári készlet modul</h4>
+        <p>FIFO elven működő készletnyilvántartás és áruforgalom kezelés (SUPRA rendszer).</p>
+      </div>
+      <div class="module-card fade-in fade-in-delay-1">
+        <div class="module-icon">🧾</div>
+        <h4>Számlázás modul</h4>
+        <p>Kimenő számlák elektronikus kezelése, NAV adatszolgáltatás, több pénznem támogatása.</p>
+      </div>
+      <div class="module-card fade-in fade-in-delay-2">
+        <div class="module-icon">📋</div>
+        <h4>Szerződésnyilvántartás</h4>
+        <p>Szerződések nyilvántartása automatikus számlakészítéssel és értesítési rendszerrel.</p>
+      </div>
+      <div class="module-card fade-in">
+        <div class="module-icon">💰</div>
+        <h4>Házipénztár modul</h4>
+        <p>Készpénz bevételek és kiadások kezelése, pénztárjelentések és zárási folyamatok.</p>
+      </div>
+      <div class="module-card fade-in fade-in-delay-1">
+        <div class="module-icon">📈</div>
+        <h4>Mérleg és elemzés modul</h4>
+        <p>Pénzügyi kimutatások, mérleg és eredménykimutatás, auditexport funkciókkal.</p>
+      </div>
+      <div class="module-card fade-in fade-in-delay-2">
+        <div class="module-icon">📉</div>
+        <h4>Excel függvénycsomag</h4>
+        <p>Közvetlen adatelérés a SUP adatbázisból Excel-be — valós idejű riportok, pivot táblák.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════ -->
+<section class="section testimonials" id="velemenyek">
+  <div class="container">
+    <h2 class="section-title fade-in">Ügyfeleink mondták…</h2>
+    <p class="section-sub fade-in fade-in-delay-1">Valódi vélemények valódi felhasználóktól.</p>
+    <div class="testi-grid">
+      <div class="testi-card fade-in">
+        <div class="testi-quote">"</div>
+        <p>Kiváló szoftver, könnyen testreszabható, így csak a szükséges programrészeket kell megvásárolni. Nagyon élvezem a munkát vele.</p>
+        <div class="testi-author">
+          <img src="pages/01_fooldal/images/Maria-125x125.png" alt="Maria" class="testi-avatar" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="testi-avatar-placeholder" style="display:none">M</div>
+          <div>
+            <div class="testi-name">Maria</div>
+            <div class="testi-role">SUP felhasználó</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card fade-in fade-in-delay-1">
+        <div class="testi-quote">"</div>
+        <p>Számomra a legfontosabb az adatok lekérdezése. A SUP rendszer korlátlan beépített listázási lehetőségeket kínál, és saját lekérdezéseket is készíthetek.</p>
+        <div class="testi-author">
+          <img src="pages/01_fooldal/images/katalin-125x125.png" alt="Katalin" class="testi-avatar" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="testi-avatar-placeholder" style="display:none">K</div>
+          <div>
+            <div class="testi-name">Katalin</div>
+            <div class="testi-role">Kontrolling vezető</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card fade-in fade-in-delay-2">
+        <div class="testi-quote">"</div>
+        <p>A pontos könyvelés legfontosabb eleme a jó eszköz. De egyetlen könyvelési szoftver sem ér semmit megfelelő terméktámogatás nélkül. 15 éve megtalálom ezt itt.</p>
+        <div class="testi-author">
+          <img src="pages/01_fooldal/images/Ajtai_Karolyne-125x125.jpg" alt="Ajtai Karolyné" class="testi-avatar" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="testi-avatar-placeholder" style="display:none">A</div>
+          <div>
+            <div class="testi-name">Ajtai Karolyné</div>
+            <div class="testi-role">15 éve elégedett ügyfél</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     SPECIAL OFFER
+════════════════════════════════════ -->
+<section class="section offer" id="ajanlat">
+  <div class="container">
+    <div class="offer-card fade-in">
+      <div class="offer-badge">⚡ Különleges ajánlat — Érvényes 2026. december 31-ig</div>
+      <div class="offer-inner">
+        <div>
+          <h2>Váltson most és spóroljon <strong>20%‑ot</strong> havonta</h2>
+          <p>Egyéni vállalkozók és kisebb vállalkozások könyveléséhez: ha az aktuális árlistából számított bérleti díj nem haladja meg a havi 30 000 Ft + ÁFA összeget, 20% kedvezményt nyújtunk — és a telepítési költségek is elengedésre kerülnek!</p>
+          <div class="offer-perks">
+            <div class="offer-perk">20% kedvezmény a havi bérleti díjból</div>
+            <div class="offer-perk">Ingyenes telepítés és beüzemelés</div>
+            <div class="offer-perk">Cégreszabott ajánlat, kötelezettség nélkül</div>
+            <div class="offer-perk">Érvényes: 2026. december 31-ig</div>
+          </div>
+          <br>
+          <a href="#kapcsolat" class="btn-primary" style="margin-top: 8px; display: inline-flex;">Ajánlatot kérek →</a>
+        </div>
+        <div class="offer-cta">
+          <div class="offer-discount"><span>-</span>20<span>%</span></div>
+          <div class="offer-expire">Korlátozott ideig érvényes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     CONTACTS
+════════════════════════════════════ -->
+<section class="section contacts" id="kapcsolat">
+  <div class="container">
+    <h2 class="section-title fade-in">Közvetlen kapcsolattartóink</h2>
+    <p class="section-sub fade-in fade-in-delay-1">Szakértőink személyesen állnak rendelkezésére — hívjon vagy írjon bátran!</p>
+    <div class="contacts-grid">
+      <div class="contact-card fade-in">
+        <img src="pages/01_fooldal/images/qsoft_gabika-360x455.jpg" alt="Mészáros Gábor" class="contact-photo">
+        <div class="contact-name">Mészáros Gábor</div>
+        <div class="contact-title">Értékesítési igazgató</div>
+        <div class="contact-info">
+          <a href="tel:+36209896340"><span class="ci-icon">📞</span>(20) 989-6340</a>
+          <a href="mailto:m.gabor@qsoft.hu"><span class="ci-icon">✉️</span>m.gabor@qsoft.hu</a>
+        </div>
+      </div>
+      <div class="contact-card fade-in fade-in-delay-1">
+        <img src="pages/01_fooldal/images/qsoft_timi-360x455.jpg" alt="Visnyei Tímea" class="contact-photo">
+        <div class="contact-name">Visnyei Tímea</div>
+        <div class="contact-title">Ügyfélszolgálati igazgató</div>
+        <div class="contact-info">
+          <a href="tel:+36205538422"><span class="ci-icon">📞</span>(20) 553-8422</a>
+          <a href="mailto:visnyei.timea@qsoft.hu"><span class="ci-icon">✉️</span>visnyei.timea@qsoft.hu</a>
+        </div>
+      </div>
+      <div class="contact-card fade-in fade-in-delay-2">
+        <img src="pages/01_fooldal/images/qsoft_karcsi-360x455.jpg" alt="Kiss Károly" class="contact-photo">
+        <div class="contact-name">Kiss Károly</div>
+        <div class="contact-title">Fejlesztési igazgató</div>
+        <div class="contact-info">
+          <a href="tel:+36205517573"><span class="ci-icon">📞</span>(20) 551-7573</a>
+          <a href="mailto:kk@qsoft.hu"><span class="ci-icon">✉️</span>kk@qsoft.hu</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">
+          <span class="logo-q" style="font-size:22px;font-weight:600;">Q</span>
+          <span class="logo-soft" style="font-size:22px;font-weight:400;">soft</span>
+        </div>
+        <p class="footer-desc">Ügyviteli számviteli programcsomagok hazai vállalkozásoknak 1993 óta. Megbízható, rugalmas, cégreszabható.</p>
+        <br>
+        <div class="footer-contact-item">
+          <span class="fc-icon">📍</span>
+          <span>1119 Budapest, Fehérvári út 85. I. emelet</span>
+        </div>
+        <div class="footer-contact-item">
+          <span class="fc-icon">📞</span>
+          <span><a href="tel:+3613654446" style="color:inherit;">+36 (1) 365-4446</a></span>
+        </div>
+        <div class="footer-contact-item">
+          <span class="fc-icon">✉️</span>
+          <span><a href="mailto:ertekesites@sup.hu" style="color:inherit;">ertekesites@sup.hu</a></span>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Szoftverek</h5>
+        <ul>
+          <li><a href="#">SUP Vállalatirányítás</a></li>
+          <li><a href="#">TIP Iratkezelő</a></li>
+          <li><a href="#">Online Lekérdezések</a></li>
+          <li><a href="#">Excel függvénycsomag</a></li>
+          <li><a href="#">Referencia lista</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Cég</h5>
+        <ul>
+          <li><a href="#">Rólunk</a></li>
+          <li><a href="#">Minőségpolitika</a></li>
+          <li><a href="#">Állás</a></li>
+          <li><a href="#">Támogatás</a></li>
+          <li><a href="#kapcsolat">Kapcsolat</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Qsoft Kft. Minden jog fenntartva.</div>
+      <div class="footer-links">
+        <a href="#">Adatvédelem</a>
+        <a href="#">ÁSZF</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════ -->
+<script>
+  /* ── Sticky header shadow ── */
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 12);
+  }, { passive: true });
+
+  /* ── Hamburger / mobile menu ── */
+  const hamburger = document.getElementById('hamburger');
+  const navMobile = document.getElementById('nav-mobile');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navMobile.classList.toggle('open');
+  });
+  navMobile.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navMobile.classList.remove('open');
+    });
+  });
+
+  /* ── Dropdown ── */
+  const navSzoftverek = document.getElementById('nav-szoftverek');
+  navSzoftverek.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navSzoftverek.classList.toggle('open');
+  });
+  document.addEventListener('click', () => navSzoftverek.classList.remove('open'));
+
+  /* ── Smooth scroll for anchor links ── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        const offset = 72; // header height
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  /* ── IntersectionObserver: fade-in ── */
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  fadeEls.forEach(el => fadeObserver.observe(el));
+
+  /* ── Counter animation ── */
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target, 10);
+    const duration = 1800;
+    const start = performance.now();
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // easeOutExpo
+      const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      el.textContent = Math.floor(ease * target).toLocaleString('hu-HU');
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  const counters = document.querySelectorAll('.counter');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => counterObserver.observe(c));
+</script>
+
+</body>
+</html>
