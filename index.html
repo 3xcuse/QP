@@ -180,9 +180,28 @@
     ════════════════════════════════════ */
     .hero {
       padding: 160px 0 96px;
-      background: linear-gradient(160deg, #ffffff 60%, var(--blue-light) 100%);
+      background: linear-gradient(160deg, #ffffff 55%, var(--blue-light) 100%);
     }
-    .hero-inner { max-width: 720px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 55% 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .hero-text { /* bal oszlop */ }
+    .hero-image-wrap {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(30,49,132,.22);
+      transform: perspective(1200px) rotateY(-4deg);
+      transition: transform 0.5s ease;
+    }
+    .hero-image-wrap:hover {
+      transform: perspective(1200px) rotateY(0deg);
+    }
+    .hero-image-wrap video {
+      width: 100%; display: block;
+    }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
       background: var(--blue-light); color: var(--blue);
@@ -455,6 +474,8 @@
        RESPONSIVE
     ════════════════════════════════════ */
     @media (max-width: 1023px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-image-wrap { display: none; }
       .products-grid { grid-template-columns: repeat(2, 1fr); }
       .modules-grid { grid-template-columns: repeat(2, 1fr); }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -544,17 +565,27 @@
 ════════════════════════════════════ -->
 <section class="hero" id="fooldal">
   <div class="container">
-    <div class="hero-inner">
-      <div class="hero-badge fade-in">Több mint 30 éves szakmai tapasztalat</div>
-      <h1 class="fade-in fade-in-delay-1">
-        Ügyviteli megoldások<br><em>vállalkozásoknak</em>
-      </h1>
-      <p class="fade-in fade-in-delay-2">
-        A Qsoft Kft. integrált vállalatirányítási rendszerei segítenek a könyvelés, pénzügy, raktár és számlázás folyamatait egy helyen kezelni — egyszerűen, megbízhatóan.
-      </p>
-      <div class="hero-cta fade-in fade-in-delay-3">
-        <a href="#kapcsolat" class="btn-primary">Ajánlatot kérek →</a>
-        <a href="#termekek" class="btn-secondary">Megismeri a rendszert</a>
+    <div class="hero-grid">
+      <!-- Bal: szöveg -->
+      <div class="hero-text">
+        <div class="hero-badge fade-in">Több mint 30 éves szakmai tapasztalat</div>
+        <h1 class="fade-in fade-in-delay-1">
+          Ügyviteli megoldások<br><em>vállalkozásoknak</em>
+        </h1>
+        <p class="fade-in fade-in-delay-2">
+          A Qsoft Kft. integrált vállalatirányítási rendszerei segítenek a könyvelés, pénzügy, raktár és számlázás folyamatait egy helyen kezelni — egyszerűen, megbízhatóan.
+        </p>
+        <div class="hero-cta fade-in fade-in-delay-3">
+          <a href="#kapcsolat" class="btn-primary">Ajánlatot kérek →</a>
+          <a href="#termekek" class="btn-secondary">Megismeri a rendszert</a>
+        </div>
+      </div>
+      <!-- Jobb: animált videó (SUP_iroda6 GIF → MP4, VEO crop nélkül) -->
+      <div class="hero-image-wrap fade-in fade-in-delay-2">
+        <video autoplay loop muted playsinline
+               aria-label="SUP Vállalatirányítási Rendszer működés közben">
+          <source src="pages/01_fooldal/images/SUP_iroda6_hero.mp4" type="video/mp4">
+        </video>
       </div>
     </div>
   </div>
@@ -935,6 +966,24 @@
     });
   }, { threshold: 0.5 });
   counters.forEach(c => counterObserver.observe(c));
+
+  /* ── Hero video parallax ── */
+  const heroWrap = document.querySelector('.hero-image-wrap');
+  if (heroWrap && window.innerWidth >= 1024) {
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY * 0.08;
+      heroWrap.style.transform =
+        `perspective(1200px) rotateY(-4deg) translateY(${y}px)`;
+    }, { passive: true });
+    heroWrap.addEventListener('mouseenter', () => {
+      heroWrap.style.transform = `perspective(1200px) rotateY(0deg)`;
+    });
+    heroWrap.addEventListener('mouseleave', () => {
+      const y = window.scrollY * 0.08;
+      heroWrap.style.transform =
+        `perspective(1200px) rotateY(-4deg) translateY(${y}px)`;
+    });
+  }
 </script>
 
 </body>
