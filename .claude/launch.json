@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "char-style-editor",
+      "runtimeExecutable": "C:\\Users\\kissb\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+      "runtimeArgs": ["-m", "http.server", "3777", "--directory", "C:\\Users\\kissb\\Documents\\char-style-editor"],
+      "port": 3777
+    },
+    {
+      "name": "qsoft-header",
+      "runtimeExecutable": "C:\\Users\\kissb\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+      "runtimeArgs": ["-m", "http.server", "3778", "--directory", "C:\\Users\\kissb\\Documents\\Cloude code integration"],
+      "port": 3778
+    }
+  ]
+}

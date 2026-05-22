@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pandoc \"C:\\\\Users\\\\kissb\\\\Downloads\\\\qsoft_hu_teljes_tartalom.docx\" -o \"C:\\\\Users\\\\kissb\\\\Downloads\\\\qsoft_tartalom.md\" --track-changes=all)",
+      "Bash(nslookup qsoft.hu)",
+      "Bash(curl -s -I --max-time 10 https://www.qsoft.hu)",
+      "WebSearch",
+      "Bash(git add *)",
+      "Bash(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\kissb\\\\Documents\\\\Cloude code integration\\\\fonts\")",
+      "PowerShell(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\kissb\\\\Documents\\\\Cloude code integration\\\\fonts\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "WebFetch(domain:www.qsoft.hu)"
+    ]
+  }
+}
