@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Működési feltételek – Qsoft SUP Rendszer</title>
+  <meta name="description" content="A SUP Vállalatirányítási Rendszer szerver- és kliens oldali hardver, szoftver követelményei.">
+  <style>
+    @font-face { font-family:'Planer'; src:url('fonts/Planer-Regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Planer'; src:url('fonts/Planer-DemiBold.woff2') format('woff2'); font-weight:600; font-style:normal; font-display:swap; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Planer',system-ui,-apple-system,sans-serif;color:#111827;background:#fff;line-height:1.6;}
+    img{display:block;max-width:100%;}
+    a{text-decoration:none;}
+    :root{
+      --blue:#1e3184;--blue-dark:#162560;--blue-light:#e8ecf7;
+      --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;
+      --gray-500:#6b7280;--gray-600:#6e7681;--gray-700:#374151;--gray-900:#111827;--dark:#0f172a;
+      --radius:12px;--shadow-sm:0 1px 3px rgba(0,0,0,.08);--shadow-md:0 4px 16px rgba(0,0,0,.10);--shadow-lg:0 10px 40px rgba(0,0,0,.14);--transition:0.25s ease;
+    }
+    .container{max-width:1200px;margin:0 auto;padding:0 32px;}
+    .section{padding:80px 0;}
+    .section-title{font-size:30px;font-weight:600;color:var(--gray-900);margin-bottom:10px;letter-spacing:-0.02em;}
+    .section-sub{font-size:16px;color:var(--gray-500);max-width:560px;line-height:1.7;margin-bottom:48px;}
+
+    /* Header */
+    header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--gray-200);transition:box-shadow var(--transition);}
+    header.scrolled{box-shadow:var(--shadow-md);}
+    .header-inner{max-width:1200px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+    .logo{display:inline-flex;align-items:baseline;text-decoration:none;user-select:none;}
+    .logo-q{font-size:26px;font-weight:600;color:var(--blue);letter-spacing:-0.03em;}
+    .logo-soft{font-size:26px;font-weight:400;color:var(--gray-600);letter-spacing:-0.03em;}
+    .nav-desktop{display:flex;align-items:center;gap:6px;}
+    .nav-desktop>a,.nav-item>a{font-size:14px;font-weight:500;color:var(--gray-700);padding:8px 14px;border-radius:8px;transition:color var(--transition),background var(--transition);white-space:nowrap;}
+    .nav-desktop>a:hover,.nav-item>a:hover{color:var(--blue);background:var(--blue-light);}
+    .nav-item{position:relative;}
+    .nav-item>a{display:flex;align-items:center;gap:4px;cursor:pointer;}
+    .nav-item>a::after{content:'';width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;transition:transform var(--transition);}
+    .nav-item.open>a::after{transform:rotate(180deg);}
+    .dropdown{position:absolute;top:calc(100% + 8px);left:0;background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);box-shadow:var(--shadow-lg);min-width:240px;padding:8px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity var(--transition),transform var(--transition),visibility var(--transition);}
+    .nav-item.open .dropdown,.nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+    .dropdown a{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--gray-700);padding:10px 12px;border-radius:8px;transition:background var(--transition),color var(--transition);}
+    .dropdown a:hover{background:var(--blue-light);color:var(--blue);}
+    .dropdown a .dd-icon{font-size:16px;width:22px;text-align:center;}
+    .dropdown-divider{height:1px;background:var(--gray-200);margin:6px 0;}
+    .btn-header{font-size:14px;font-weight:600;color:#fff;background:var(--blue);padding:9px 20px;border-radius:8px;transition:background var(--transition);}
+    .btn-header:hover{background:var(--blue-dark);}
+    .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--gray-700);border-radius:2px;transition:transform 0.3s,opacity 0.3s;}
+    .hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.active span:nth-child(2){opacity:0;}
+    .hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .nav-mobile{display:none;flex-direction:column;background:#fff;border-top:1px solid var(--gray-200);padding:16px 24px 24px;}
+    .nav-mobile.open{display:flex;}
+    .nav-mobile a{font-size:15px;font-weight:500;color:var(--gray-700);padding:10px 0;border-bottom:1px solid var(--gray-100);}
+    .nav-mobile a:hover{color:var(--blue);}
+    .nav-mobile .mob-sub{padding-left:16px;font-size:14px;color:var(--gray-500);}
+    .nav-mobile .btn-mobile{margin-top:16px;text-align:center;background:var(--blue);color:#fff;border-radius:8px;padding:12px;font-weight:600;}
+
+    /* Page Hero */
+    .page-hero{padding:120px 0 56px;background:linear-gradient(160deg,#fff 70%,var(--blue-light));border-bottom:3px solid var(--blue);}
+    .page-hero-title{font-size:clamp(28px,4vw,44px);font-weight:600;color:var(--gray-900);letter-spacing:-0.02em;margin-bottom:16px;}
+    .page-hero-sub{font-size:18px;color:var(--gray-500);max-width:720px;line-height:1.75;}
+    .breadcrumb{font-size:13px;color:var(--gray-500);margin-bottom:16px;}
+    .breadcrumb a{color:var(--blue);}
+    .breadcrumb a:hover{text-decoration:underline;}
+
+    /* Full-width image */
+    .full-img{width:100%;border-radius:var(--radius);border:1px solid var(--gray-200);box-shadow:var(--shadow-md);margin-bottom:56px;}
+
+    /* Requirement cards 2x2 */
+    .req-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+    .req-card{background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);padding:32px;transition:transform var(--transition),box-shadow var(--transition),border-color var(--transition);}
+    .req-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--blue);}
+    .req-icon{font-size:32px;margin-bottom:16px;}
+    .req-card h3{font-size:18px;font-weight:600;color:var(--gray-900);margin-bottom:16px;}
+    .req-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+    .req-list li{font-size:14px;color:var(--gray-700);line-height:1.6;padding-left:18px;position:relative;}
+    .req-list li::before{content:'•';color:var(--blue);position:absolute;left:0;font-weight:700;}
+    .req-list strong{color:var(--gray-900);}
+
+    /* CTA bar */
+    .cta-bar{background:var(--blue);color:#fff;padding:64px 0;text-align:center;}
+    .cta-bar h2{font-size:26px;font-weight:600;margin-bottom:10px;}
+    .cta-bar p{font-size:16px;color:rgba(255,255,255,.75);margin-bottom:32px;}
+    .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;font-size:15px;font-weight:600;padding:14px 28px;border-radius:10px;transition:background var(--transition),transform var(--transition),box-shadow var(--transition);}
+    .btn-primary:hover{background:var(--blue-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(30,49,132,.35);}
+    .btn-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--blue);font-size:15px;font-weight:600;padding:14px 28px;border-radius:10px;border:2px solid var(--blue);transition:background var(--transition),transform var(--transition);}
+    .btn-secondary:hover{background:var(--blue-light);transform:translateY(-2px);}
+    .cta-bar .btn-primary{background:#fff;color:var(--blue);}
+    .cta-bar .btn-primary:hover{background:var(--blue-light);}
+    .cta-bar .btn-secondary{border-color:rgba(255,255,255,.5);color:#fff;}
+    .cta-bar .btn-secondary:hover{background:rgba(255,255,255,.1);}
+    .cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+    /* Footer */
+    footer{background:var(--dark);color:rgba(255,255,255,.65);}
+    .footer-top{padding:64px 0 48px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;border-bottom:1px solid rgba(255,255,255,.08);}
+    .footer-logo{display:flex;align-items:baseline;margin-bottom:16px;}
+    .footer-logo .logo-q{color:#fff;}
+    .footer-logo .logo-soft{color:rgba(255,255,255,.5);}
+    .footer-desc{font-size:14px;line-height:1.75;max-width:300px;}
+    .footer-col h5{font-size:13px;font-weight:600;color:#fff;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:20px;}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+    .footer-col ul a{font-size:14px;color:rgba(255,255,255,.55);transition:color var(--transition);}
+    .footer-col ul a:hover{color:#fff;}
+    .footer-contact-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.6;margin-bottom:12px;}
+    .footer-contact-item .fc-icon{font-size:15px;flex-shrink:0;margin-top:2px;}
+    .footer-bottom{padding:24px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+    .footer-copy{font-size:13px;}
+    .footer-links{display:flex;gap:24px;}
+    .footer-links a{font-size:13px;color:rgba(255,255,255,.4);transition:color var(--transition);}
+    .footer-links a:hover{color:rgba(255,255,255,.8);}
+
+    /* Animations */
+    .fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+    .fade-in.visible{opacity:1;transform:translateY(0);}
+    .fade-in-delay-1{transition-delay:0.1s;}
+    .fade-in-delay-2{transition-delay:0.2s;}
+    .fade-in-delay-3{transition-delay:0.3s;}
+
+    /* Responsive */
+    @media(max-width:1023px){.footer-top{grid-template-columns:1fr 1fr;}}
+    @media(max-width:767px){
+      .container{padding:0 20px;}.section{padding:56px 0;}
+      .req-grid{grid-template-columns:1fr;}
+      .footer-top{grid-template-columns:1fr;}.footer-bottom{flex-direction:column;text-align:center;}
+      .nav-desktop{display:none;}.btn-header{display:none;}.hamburger{display:flex;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo"><span class="logo-q">Q</span><span class="logo-soft">soft</span></a>
+    <nav class="nav-desktop">
+      <div class="nav-item" id="nav-szoftverek">
+        <a href="#">Szoftverek</a>
+        <div class="dropdown">
+          <a href="sup-integralt.html"><span class="dd-icon">🏢</span>SUP Vállalatirányítási Rendszer</a>
+          <a href="tip-iratkezelo.html"><span class="dd-icon">📁</span>TIP Iratkezelő Rendszer</a>
+          <a href="online-informacios-lekerdezesek.html"><span class="dd-icon">🌐</span>Online Információs Lekérdezések</a>
+          <div class="dropdown-divider"></div>
+          <a href="sup-integralt.html#modulok"><span class="dd-icon">🧩</span>Összes modul</a>
+          <a href="excel-fugvenycsomag.html"><span class="dd-icon">📊</span>Excel függvénycsomag</a>
+          <a href="referencia-lista.html"><span class="dd-icon">✅</span>Referencia lista</a>
+        </div>
+      </div>
+      <a href="sup-integralt.html#modulok">Modulok</a>
+      <a href="vasarlas-es-rendszerbevezetes.html">Ajánlat</a>
+      <a href="index.html#kapcsolat">Kapcsolat</a>
+    </nav>
+    <a href="vasarlas-es-rendszerbevezetes.html" class="btn-header">Ajánlatot kérek</a>
+    <button class="hamburger" id="hamburger" aria-label="Menü"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="nav-mobile" id="nav-mobile">
+    <a href="sup-integralt.html">SUP Vállalatirányítási Rendszer</a>
+    <a href="tip-iratkezelo.html" class="mob-sub">TIP Iratkezelő Rendszer</a>
+    <a href="online-informacios-lekerdezesek.html" class="mob-sub">Online Információs Lekérdezések</a>
+    <a href="sup-integralt.html#modulok">Modulok</a>
+    <a href="vasarlas-es-rendszerbevezetes.html">Ajánlat</a>
+    <a href="index.html#kapcsolat">Kapcsolat</a>
+    <a href="vasarlas-es-rendszerbevezetes.html" class="btn-mobile">Ajánlatot kérek →</a>
+  </nav>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Főoldal</a> › <a href="sup-integralt.html">SUP Rendszer</a> › Működési feltételek
+    </div>
+    <h1 class="page-hero-title fade-in">Működési feltételek</h1>
+    <p class="page-hero-sub fade-in fade-in-delay-1">
+      A SUP Vállalatirányítási Rendszer a kliens-szerver architektúrából következően alapvetően hálózati működési környezetre van tervezve, azonban működtethető egygépes környezetben is. Lehetőség van Microsoft Windows Terminál Szerver (RDP) vagy Citrix környezetben történő üzemeltetésre is.
+    </p>
+  </div>
+</section>
+
+<!-- KÉP + KÖVETELMÉNYEK -->
+<section class="section" style="background:#fff;">
+  <div class="container">
+    <img src="pages/03_mukodesi-feltetelek/images/mukodesi_feltetelek.png"
+         alt="Működési feltételek rendszerábra" class="full-img fade-in">
+
+    <h2 class="section-title fade-in">Hardver és szoftver követelmények</h2>
+    <p class="section-sub fade-in fade-in-delay-1">A szerver teljesítményét és memória kapacitását a feldolgozandó adatmennyiséggel és a várható munkahelyek számával összhangban kell meghatározni.</p>
+
+    <div class="req-grid">
+      <div class="req-card fade-in">
+        <div class="req-icon">🖥️</div>
+        <h3>Szerver oldali hardver</h3>
+        <ul class="req-list">
+          <li><strong>Közepes Linux szerver:</strong> Intel® Core™ i7 vagy jobb, 4 GB+ RAM, 500 GB merevlemez, szünetmentes tápegység</li>
+          <li><strong>Erősebb Linux szerver:</strong> Intel Xeon processzor, 4 GB+ RAM, 3×500 GB RAID5 merevlemez, mentést biztosító eszköz, szünetmentes tápegység</li>
+          <li><strong>Windows szerver:</strong> Intel Xeon kategóriájú processzor, 8 GB+ RAM, 3×500 GB HDD (RAID), szünetmentes tápegység</li>
+          <li>Ha Windows az operációs rendszer, az ajánlotthoz képest legalább 4 GB extra RAM szükséges</li>
+        </ul>
+      </div>
+      <div class="req-card fade-in fade-in-delay-1">
+        <div class="req-icon">⚙️</div>
+        <h3>Szerver oldali szoftver</h3>
+        <ul class="req-list">
+          <li><strong>Linux:</strong> Ajánlott disztribúció: Debian vagy Ubuntu. File szerver modulként Samba szükséges. A Firebird SQL adatbázis-szerver a disztribúció repozitorijából vagy Docker.CE környezetből telepíthető.</li>
+          <li><strong>Windows Szerver:</strong> Windows 2008/2008R2-től Windows 2019 DataCenter-ig bármi megfelelő</li>
+          <li><strong>Windows Desktop</strong> (kis cégek esetén): Windows 10 Professional</li>
+          <li><strong>Mac OS X:</strong> A Firebird SQL szerver támogatja, de SUP-pal való gyakorlati megvalósításról nincs tudomásunk</li>
+        </ul>
+      </div>
+      <div class="req-card fade-in fade-in-delay-2">
+        <div class="req-icon">💻</div>
+        <h3>Kliens oldali hardver</h3>
+        <ul class="req-list">
+          <li>Intel® Core™ i3 vagy jobb kategóriájú számítógép</li>
+          <li>Legalább 4 GB RAM (további alkalmazásoktól függően)</li>
+          <li>500 MB szabad merevlemez kapacitás</li>
+          <li>1024×768 képpont felbontásra beállított monitor</li>
+        </ul>
+      </div>
+      <div class="req-card fade-in fade-in-delay-3">
+        <div class="req-icon">🪟</div>
+        <h3>Kliens oldali szoftver</h3>
+        <ul class="req-list">
+          <li><strong>Operációs rendszer:</strong> Windows 10 Professional vagy Ultimate változata</li>
+          <li>A Windows 95/98/Me/Vista/2000/XP és egyéb Home vagy Embedded (IoT) változatok <strong>nem alkalmasak!</strong></li>
+          <li>Szükséges a Firebird SQL adatbázismotor kliensének telepítése</li>
+          <li>Ajánlott a Windows legutolsó Service Pack telepítése</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-bar">
+  <div class="container">
+    <h2>Kérdése van a telepítésről?</h2>
+    <p>Szakértőink segítenek a megfelelő konfiguráció kiválasztásában és a rendszer beüzemelésében.</p>
+    <div class="cta-buttons">
+      <a href="vasarlas-es-rendszerbevezetes.html" class="btn-primary">Ajánlatot kérek →</a>
+      <a href="sup-integralt.html" class="btn-secondary">Vissza a SUP rendszerhez</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">
+          <span class="logo-q" style="font-size:22px;font-weight:600;">Q</span>
+          <span class="logo-soft" style="font-size:22px;font-weight:400;">soft</span>
+        </div>
+        <p class="footer-desc">Ügyviteli számviteli programcsomagok hazai vállalkozásoknak 1993 óta.</p>
+        <br>
+        <div class="footer-contact-item"><span class="fc-icon">📍</span><span>1119 Budapest, Fehérvári út 85. I. emelet</span></div>
+        <div class="footer-contact-item"><span class="fc-icon">📞</span><span><a href="tel:+3613654446" style="color:inherit;">+36 (1) 365-4446</a></span></div>
+        <div class="footer-contact-item"><span class="fc-icon">✉️</span><span><a href="mailto:ertekesites@sup.hu" style="color:inherit;">ertekesites@sup.hu</a></span></div>
+      </div>
+      <div class="footer-col">
+        <h5>Szoftverek</h5>
+        <ul>
+          <li><a href="sup-integralt.html">SUP Vállalatirányítás</a></li>
+          <li><a href="tip-iratkezelo.html">TIP Iratkezelő</a></li>
+          <li><a href="online-informacios-lekerdezesek.html">Online Lekérdezések</a></li>
+          <li><a href="excel-fugvenycsomag.html">Excel függvénycsomag</a></li>
+          <li><a href="referencia-lista.html">Referencia lista</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Cég</h5>
+        <ul>
+          <li><a href="index.html">Főoldal</a></li>
+          <li><a href="mukodesi-feltetelek.html">Működési feltételek</a></li>
+          <li><a href="vasarlas-es-rendszerbevezetes.html">Vásárlás</a></li>
+          <li><a href="index.html#kapcsolat">Kapcsolat</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Qsoft Kft. Minden jog fenntartva.</div>
+      <div class="footer-links"><a href="#">Adatvédelem</a><a href="#">ÁSZF</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const header=document.getElementById('site-header');
+  window.addEventListener('scroll',()=>{header.classList.toggle('scrolled',window.scrollY>12);},{passive:true});
+  const hamburger=document.getElementById('hamburger');
+  const navMobile=document.getElementById('nav-mobile');
+  hamburger.addEventListener('click',()=>{hamburger.classList.toggle('active');navMobile.classList.toggle('open');});
+  navMobile.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hamburger.classList.remove('active');navMobile.classList.remove('open');}));
+  const navSzoftverek=document.getElementById('nav-szoftverek');
+  navSzoftverek.addEventListener('click',e=>{e.stopPropagation();navSzoftverek.classList.toggle('open');});
+  document.addEventListener('click',()=>navSzoftverek.classList.remove('open'));
+  const fadeObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');fadeObserver.unobserve(entry.target);}});},{threshold:0.12});
+  document.querySelectorAll('.fade-in').forEach(el=>fadeObserver.observe(el));
+</script>
+</body>
+</html>
