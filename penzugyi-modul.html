@@ -291,8 +291,8 @@
   (function(){
     var page=location.pathname.split('/').pop()||'index.html';
     document.querySelectorAll('.nav-desktop > a').forEach(function(a){
-      var href=(a.getAttribute('href')||'').split('#')[0];
-      if(href && href===page) a.classList.add('nav-active');
+      var href=a.getAttribute('href')||'';
+      if(href && href.indexOf('#')===-1 && href===page) a.classList.add('nav-active');
     });
     var swP=['sup-integralt','tip-iratkezelo','online-informacios','excel-fugvenycsomag','referencia-lista','szamviteli','penzugyi','targyi','raktari','szamlazas','szerzodes','hazi-penztar','merleg','mukodesi'];
     if(swP.some(function(p){return page.indexOf(p)!==-1;})){
